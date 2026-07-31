@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SMS Terms | KDT Landscaping</title>
+<meta name="robots" content="index,follow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;600;700&family=Source+Sans+3:wght@300;400;600&family=Cormorant+Garamond:ital,wght@1,500&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   KDT LANDSCAPING — design tokens sampled from the LIVE site
+   kdtlandscape.ca, rendered via Playwright 2026-07-29.
+   ⚠️ Supersedes the #45c65a / #6fc967 logo-sampled greens: the
+   live 2026 site is DEEP FOREST #0A4627. Do not revert.
+   Structure below is the locked Brandon LP format — skin changed,
+   conversion layout deliberately NOT changed.
+   ============================================================ */
+:root{
+  --bg:#F9F8F6;            /* warm off-white, their light sections */
+  --panel:#FFFFFF;
+  --panel-alt:#F0EEEB;
+  --line:#E2DFDA;
+  --ink:#0A0E11;           /* their heading ink */
+  --muted:#5A5F66;
+  --brand:#0A4627;         /* deep forest — buttons, scrims, accents */
+  --brand-hover:#0d5c33;
+  --brand-light:#4C9A6A;   /* derived: legible green for ON-DARK accents only */
+  --brand-ink:#FFFFFF;
+  --display:Oswald,"Arial Narrow",sans-serif;
+  --body:"Source Sans 3",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  --script:"Cormorant Garamond",Georgia,serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.6 var(--body)}
+.wrap{max-width:1180px;margin:0 auto;padding:0 22px}
+a{color:inherit}
+
+/* ---- top utility bar: mirrors their black strip ---- */
+.topband{background:var(--ink);color:#fff}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+.logo-chip{background:#fff;padding:7px 12px;display:inline-flex;align-items:center}
+.logo-img{height:44px;width:auto;display:block}
+.tel{display:inline-block;background:var(--brand);color:#fff;font-family:var(--display);font-weight:600;font-size:13px;letter-spacing:.16em;text-transform:uppercase;padding:13px 22px;border-radius:0;text-decoration:none}
+.tel:hover{background:var(--brand-hover)}
+
+/* ---- hero: full-bleed photo + dark scrim, exactly their treatment ---- */
+.hero{position:relative;padding:70px 0 78px;
+  background:linear-gradient(rgba(10,14,17,.80),rgba(10,14,17,.66)),url('assets/okanaganYard_a3745745.jpeg') center/cover no-repeat;}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:44px;align-items:start}
+
+/* their eyebrow: rule + green letterspaced caps */
+.eyebrow{display:flex;align-items:center;gap:14px;color:var(--brand-light);font-family:var(--display);font-weight:400;
+  text-transform:uppercase;letter-spacing:.26em;font-size:12px;margin:0 0 20px}
+.eyebrow:before{content:"";width:56px;height:1px;background:var(--brand-light);flex:none}
+
+/* their hero type: Oswald 200, huge, very wide tracking, last line green */
+h1{font-family:var(--display);font-size:44px;line-height:1.12;margin:0 0 18px;font-weight:300;
+  letter-spacing:.045em;text-transform:uppercase;color:#fff;max-width:19ch}
+h1 em{font-style:normal;color:var(--brand-light)}
+h1 .script{display:block;font-family:var(--script);font-style:italic;font-weight:500;font-size:36px;
+  letter-spacing:.02em;text-transform:none;color:var(--brand-light);margin-bottom:2px}
+.sub{color:rgba(255,255,255,.90);font-size:20px;font-weight:300;line-height:1.62;margin:0 0 26px;max-width:52ch}
+
+/* trust strip: their "25+ YEARS / FAMILY OWNED" rhythm, squared not pilled */
+.trust{display:flex;flex-wrap:wrap;gap:10px;padding:0;margin:0;list-style:none}
+.trust li{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.20);border-radius:0;
+  padding:10px 16px;font-size:13px;color:rgba(255,255,255,.86);font-family:var(--display);
+  font-weight:300;letter-spacing:.10em;text-transform:uppercase}
+.trust b{color:#fff;font-weight:600}
+
+/* ---- FORM CARD: class name is a tracking contract, do not rename ---- */
+.form-card{background:var(--panel);border:1px solid var(--line);border-radius:0;padding:26px;box-shadow:0 18px 50px rgba(10,14,17,.28)}
+.form-card h2{margin:0 0 6px;font-family:var(--display);font-size:23px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--ink)}
+.form-card .fine{color:var(--muted);font-size:15px;margin:0 0 18px}
+.bar{display:flex;gap:6px;margin-bottom:20px}
+.bar i{flex:1;height:3px;border-radius:0;background:var(--line)}
+.bar i.on{background:var(--brand)}
+label{display:block;font-family:var(--display);font-weight:600;font-size:12px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink);margin:16px 0 7px}
+select,input{width:100%;background:#fff;border:1px solid #CFCAC2;color:var(--ink);border-radius:0;padding:14px 12px;font-size:16px;font-family:var(--body)}
+select:focus,input:focus{outline:2px solid var(--brand);outline-offset:1px;border-color:var(--brand)}
+.hint{color:var(--muted);font-size:13px;margin:6px 0 0}
+.btn{width:100%;margin-top:20px;background:var(--brand);color:#fff;border:0;border-radius:0;padding:17px;
+  font-family:var(--display);font-size:15px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;cursor:pointer}
+.btn:hover{background:var(--brand-hover)}
+.back{display:inline-block;margin-top:12px;color:var(--muted);font-size:14px;text-decoration:none;cursor:pointer}
+.err{color:#B3261E;font-size:13px;margin-top:6px;display:none}
+.hp{position:absolute;left:-9999px;opacity:0;height:0;width:0}
+
+/* ---- light sections, their warm palette ---- */
+section{padding:66px 0;border-top:1px solid var(--line)}
+section:nth-of-type(even){background:var(--panel-alt)}
+h2.sec{font-family:var(--display);font-size:42px;font-weight:700;text-transform:uppercase;letter-spacing:.03em;margin:0 0 10px;color:var(--ink)}
+.lede{color:var(--muted);margin:0 0 30px;max-width:62ch;font-size:18px}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:0;padding:22px}
+.card h3{margin:0 0 8px;font-family:var(--display);font-size:17px;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+.card p{margin:0;color:var(--muted);font-size:16px}
+.callout{background:rgba(10,70,39,.06);border-left:3px solid var(--brand);border-radius:0;padding:22px;margin-top:22px}
+.callout p{margin:0;font-size:18px}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;counter-reset:s}
+.step{background:var(--panel);border:1px solid var(--line);border-radius:0;padding:24px}
+.step:before{counter-increment:s;content:counter(s);display:flex;align-items:center;justify-content:center;
+  width:38px;height:38px;border-radius:0;background:var(--brand);color:#fff;font-family:var(--display);font-weight:600;margin-bottom:14px}
+.step h3{font-family:var(--display);text-transform:uppercase;letter-spacing:.06em}
+.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.gallery img{width:100%;height:240px;object-fit:cover;border-radius:0;border:1px solid var(--line);display:block}
+.cap{color:var(--muted);font-size:13px;margin-top:8px}
+details{background:var(--panel);border:1px solid var(--line);border-radius:0;padding:17px 19px;margin-bottom:10px}
+details summary{cursor:pointer;font-family:var(--display);font-weight:600;font-size:16px;text-transform:uppercase;letter-spacing:.04em;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary:after{content:"+";float:right;color:var(--brand);font-weight:700}
+details[open] summary:after{content:"–"}
+details p{color:var(--muted);margin:12px 0 0}
+
+/* final CTA: dark photo band, mirrors their closing section */
+.final{text-align:center;background:linear-gradient(rgba(10,14,17,.86),rgba(10,14,17,.86)),url('assets/heroLandscape_87eacbed.jpeg') center/cover no-repeat;border-top:0}
+.final h2.sec,.final p{color:#fff}
+.final .lede{color:rgba(255,255,255,.86);margin-left:auto;margin-right:auto}
+.final .btn{max-width:440px;margin:26px auto 0;display:block;text-decoration:none;line-height:1.2}
+footer{padding:30px 0 44px;color:var(--muted);font-size:14px;text-align:center;border-top:1px solid var(--line);background:var(--bg)}
+
+@media(max-width:900px){
+  .hero{padding:26px 0 40px}
+  /* ⛔ LOCKED SPEC: form ABOVE the fold. On mobile the hero copy pushed it under,
+     so the left column dissolves and the form is ordered directly after the H1.
+     Sub-copy and trust chips drop below it. Do not reorder back. */
+  .hero-grid{grid-template-columns:1fr;gap:0}
+  .hero-grid > div:first-child{display:contents}
+  .hero-grid .eyebrow{order:1}
+  .hero-grid h1{order:2}
+  .hero-grid .form-card{order:3;margin:4px 0 22px}
+  .hero-grid .sub{order:4}
+  .hero-grid .trust{order:5}
+  h1{font-size:27px;letter-spacing:.02em;max-width:none;margin:0 0 16px}
+  .eyebrow{margin:0 0 12px;font-size:11px;letter-spacing:.20em}
+  .eyebrow:before{width:28px}
+  .sub{font-size:17px;margin:0 0 18px}
+  h1 .script{font-size:26px}
+  .sub{font-size:18px}
+  h2.sec{font-size:30px}
+  .cols,.steps,.gallery{grid-template-columns:1fr}
+  .gallery img{height:210px}
+}
+</style>
+<style>
+.legal{background:var(--bg);padding:56px 0 72px}
+.legal h1{color:var(--ink);font-size:38px;letter-spacing:.03em;font-weight:700;max-width:none;margin:0 0 6px}
+.legal .updated{color:var(--muted);font-size:15px;margin:0 0 34px}
+.legal h2{font-family:var(--display);font-size:22px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin:34px 0 10px;color:var(--ink)}
+.legal p,.legal li{color:#33383E;font-size:17px;line-height:1.66}
+.legal ul{padding-left:20px}
+.legal a{color:var(--brand);text-decoration:underline}
+</style>
+</head>
+<body>
+
+<div class="topband">
+<div class="wrap">
+  <div class="topbar">
+    <span class="logo-chip"><img class="logo-img" src="../assets/kdt-logo_1dd2ec31.png" alt="KDT Landscaping"></span>
+    <a class="tel" href="tel:+12502587125">Call (250) 258-7125</a>
+  </div>
+</div>
+</div>
+
+<div class="legal">
+  <div class="wrap">
+    <h1>SMS Terms</h1>
+    <p class="updated">Last updated 29 July 2026</p>
+    <p>These terms apply to text messages sent by K.D.T. Landscaping Ltd. ("KDT Landscaping").</p>
+
+    <h2>What messages you will get</h2>
+    <p>If you give us your phone number and consent, we may text you about:</p>
+    <ul>
+      <li>A reply to the enquiry you submitted.</li>
+      <li>Confirming, reminding you about, or rescheduling a site visit or appointment.</li>
+      <li>A request for feedback or a review after your project is finished.</li>
+    </ul>
+
+    <h2>How you opt in</h2>
+    <p>You opt in by entering your own phone number on our web form and ticking the consent box, which is never ticked for you. We do not buy, rent, or import phone numbers from third parties.</p>
+    <p><strong>Consent to receive text messages is not a condition of purchasing any service.</strong></p>
+
+    <h2>Message frequency</h2>
+    <p>Message frequency varies depending on your enquiry and whether you have work booked with us.</p>
+
+    <h2>Cost</h2>
+    <p>Message and data rates may apply. Check with your mobile carrier.</p>
+
+    <h2>How to stop</h2>
+    <p>Reply <strong>STOP</strong> to any message to stop receiving texts from us. You will get one confirmation that you have been unsubscribed, and nothing after that.</p>
+
+    <h2>How to get help</h2>
+    <p>Reply <strong>HELP</strong> to any message, call us on 250-258-7125, or email <a href="mailto:kdtlandscape11@gmail.com">kdtlandscape11@gmail.com</a>.</p>
+
+    <h2>Carriers</h2>
+    <p>Carriers are not liable for delayed or undelivered messages. Delivery is not guaranteed.</p>
+
+    <h2>Privacy</h2>
+    <p><strong>We do not sell or share your phone number or your SMS consent with third parties for their marketing.</strong> See our <a href="privacy.html">Privacy Policy</a>.</p>
+
+  </div>
+</div>
+
+<footer>
+  K.D.T. Landscaping Ltd. &middot; Unit 2, 451 Adams Rd, Kelowna BC V1X 7R9 &middot; 250-258-7125<br>
+  <a href="privacy.html">Privacy Policy</a> &middot; <a href="sms-terms.html">SMS Terms</a>
+</footer>
+
+</body>
+</html>
