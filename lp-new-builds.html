@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>New Build Landscaping Packages in Kelowna | KDT Landscaping</title>
+<meta name="description" content="Complete landscape packages for new construction. Grading, drainage, hardscape, lawn, planting and irrigation, coordinated in one go. Family run since 1999. Kelowna and the Okanagan.">
+<!-- ⚠️ HEAD TRACKING: base pixel + PageView ONLY. Qualified Lead fires server-side via Railway CAPI. Do not add a Lead event here. -->
+<script>
+/* ============================================================
+   KDT TRACKING CONFIG  —  ⛔ PLACEHOLDERS, NOT YET LIVE
+   Replace all four values, then run:  /my-precheck kdt --tracking
+   None of these accounts existed as of 2026-07-29:
+     - no KDT GA4 property   - no KDT Meta pixel
+     - no KDT Google Ads acct - no KDT Railway endpoint
+   ============================================================ */
+window.KDT_TRACK = {
+  gadsId:    'AW-18360980753',          // Google Ads conversion tag (KDT 940-595-3731)
+  gadsLabel: 'RChkCJ_76tkcEJGqmbNE',    // 'Submit lead form' conversion LABEL - send_to needs BOTH
+  ga4Id:     'G-0VLPDYM7LC',            // GA4 measurement ID
+  metaPixel: 'XXXXXXXXXXXXXXX',         // Meta pixel / dataset ID
+  endpoint:  'https://profound-truth.up.railway.app/webhook/kdt/lp-lead'
+};
+(function(){
+  var C = window.KDT_TRACK;
+  function ok(v){ return !!v && String(v).indexOf('XXXX') === -1; }
+  /* PER-VENDOR readiness. A missing Meta pixel must not switch off GA4, and
+     NOTHING in here may switch off the lead POST - see the submit handler. */
+  var R = window.KDT_READY = {
+    /* gads needs BOTH id and label: a conversion with no label is accepted
+       silently by gtag and recorded by nobody. */
+    gads: ok(C.gadsId) && ok(C.gadsLabel), ga4: ok(C.ga4Id),
+    meta: ok(C.metaPixel), endpoint: ok(C.endpoint)
+  };
+  /* deliberately still a BOOLEAN meaning "everything configured", so that any
+     reference we missed stays conservative instead of silently passing on a
+     truthy object. */
+  window.KDT_TRACK_READY = R.gads && R.ga4 && R.meta && R.endpoint;
+  var bad = []; for (var k in C) if (!ok(C[k])) bad.push(k);
+  if (bad.length) {
+    /* LOUD ON PURPOSE. A silent no-op base tag is the exact N1 failure that
+       killed Spark's tracking for weeks. Never let this fail quietly. */
+    console.warn('[KDT] TRACKING PARTIALLY CONFIGURED - placeholders still present:', bad.join(', '),
+                 '\nWhatever IS configured still fires. The form still submits and the lead is still captured.');
+  }
+  if (!R.endpoint) {
+    console.error('[KDT] NO LEAD ENDPOINT - the form cannot capture leads. This is the only fatal one.');
+  }
+})();
+</script>
+
+<!-- Google (Ads + GA4) base + config ONLY -->
+<script>
+(function(){
+  var C = window.KDT_TRACK, R = window.KDT_READY;
+  if (!R.ga4 && !R.gads) return;                   // nothing real to load
+  var loadId = R.ga4 ? C.ga4Id : C.gadsId;         // loader needs one real id
+  var s = document.createElement('script'); s.async = true;
+  s.src = 'https://www.googletagmanager.com/gtag/js?id=' + loadId;
+  document.head.appendChild(s);
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = function(){ dataLayer.push(arguments); };
+  gtag('js', new Date());
+  if (R.gads) gtag('config', C.gadsId);            // base + config only
+  if (R.ga4)  gtag('config', C.ga4Id);
+})();
+</script>
+
+<!-- Meta pixel base + PageView ONLY (no Lead here - that is the leak) -->
+<script>
+(function(f,b,e,v,n,t,s){
+  if(!window.KDT_READY.meta) return;
+  if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];
+  t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s);
+  fbq('init', window.KDT_TRACK.metaPixel);
+  fbq('track','PageView');
+})(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+</script>
+
+<!-- click-id capture: 90-day cookie, injected into the form at submit. try/catch - never block the page on tracking -->
+<script>
+(function(){
+  try{
+    function setCookie(k,v){ document.cookie = k+'='+v+';path=/;max-age='+(90*86400)+';SameSite=Lax'; }
+    function getParam(k){ return new URLSearchParams(location.search).get(k); }
+    var g = getParam('gclid'); if(g) setCookie('_kdt_gclid', g);
+    var f = getParam('fbclid');
+    if(f) setCookie('_fbc', 'fb.1.' + Date.now() + '.' + f);
+  }catch(e){}
+})();
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;600;700&family=Source+Sans+3:wght@300;400;600&family=Cormorant+Garamond:ital,wght@1,500&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   KDT LANDSCAPING — design tokens sampled from the LIVE site
+   kdtlandscape.ca, rendered via Playwright 2026-07-29.
+   ⚠️ Supersedes the #45c65a / #6fc967 logo-sampled greens: the
+   live 2026 site is DEEP FOREST #0A4627. Do not revert.
+   Structure below is the locked Brandon LP format — skin changed,
+   conversion layout deliberately NOT changed.
+   ============================================================ */
+:root{
+  --bg:#F9F8F6;            /* warm off-white, their light sections */
+  --panel:#FFFFFF;
+  --panel-alt:#F0EEEB;
+  --line:#E2DFDA;
+  --ink:#0A0E11;           /* their heading ink */
+  --muted:#5A5F66;
+  --brand:#0A4627;         /* deep forest — buttons, scrims, accents */
+  --brand-hover:#0d5c33;
+  --brand-light:#4C9A6A;   /* derived: legible green for ON-DARK accents only */
+  --brand-ink:#FFFFFF;
+  --display:Oswald,"Arial Narrow",sans-serif;
+  --body:"Source Sans 3",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  --script:"Cormorant Garamond",Georgia,serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.6 var(--body)}
+.wrap{max-width:1180px;margin:0 auto;padding:0 22px}
+a{color:inherit}
+
+/* ---- top utility bar: mirrors their black strip ---- */
+.topband{background:var(--ink);color:#fff}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+/* Logo sits DIRECTLY on the dark band. The source PNG was black ink on an
+   opaque white background, which is why this used to need a white chip and
+   read as a sticker. assets/kdt-logo-white_knockout.png is a luminance-to-alpha
+   knockout of the same mark, recoloured white, so no chip is needed. */
+.logo-chip{display:inline-flex;align-items:center}
+.logo-img{height:52px;width:auto;display:block}
+.tel{display:inline-block;background:var(--brand);color:#fff;font-family:var(--display);font-weight:600;font-size:13px;letter-spacing:.16em;text-transform:uppercase;padding:13px 22px;border-radius:0;text-decoration:none}
+.tel:hover{background:var(--brand-hover)}
+
+/* ---- hero: full-bleed photo + dark scrim, exactly their treatment ---- */
+.hero{position:relative;padding:70px 0 78px;
+  background:linear-gradient(rgba(10,14,17,.80),rgba(10,14,17,.66)),url('assets/luxuryOutdoor_d55ffefc.jpeg') center/cover no-repeat;}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:44px;align-items:start}
+
+/* their eyebrow: rule + green letterspaced caps */
+.eyebrow{display:flex;align-items:center;gap:14px;color:var(--brand-light);font-family:var(--display);font-weight:400;
+  text-transform:uppercase;letter-spacing:.26em;font-size:12px;margin:0 0 20px}
+.eyebrow:before{content:"";width:56px;height:1px;background:var(--brand-light);flex:none}
+
+/* their hero type: Oswald 200, huge, very wide tracking, last line green */
+h1{font-family:var(--display);font-size:44px;line-height:1.12;margin:0 0 18px;font-weight:300;
+  letter-spacing:.045em;text-transform:uppercase;color:#fff;max-width:19ch}
+h1 em{font-style:normal;color:var(--brand-light)}
+h1 .script{display:block;font-family:var(--script);font-style:italic;font-weight:500;font-size:36px;
+  letter-spacing:.02em;text-transform:none;color:var(--brand-light);margin-bottom:2px}
+.sub{color:rgba(255,255,255,.90);font-size:20px;font-weight:300;line-height:1.62;margin:0 0 26px;max-width:52ch}
+
+/* trust strip: their "25+ YEARS / FAMILY OWNED" rhythm, squared not pilled */
+.trust{display:flex;flex-wrap:wrap;gap:10px;padding:0;margin:0;list-style:none}
+.trust li{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.20);border-radius:0;
+  padding:10px 16px;font-size:13px;color:rgba(255,255,255,.86);font-family:var(--display);
+  font-weight:300;letter-spacing:.10em;text-transform:uppercase}
+.trust b{color:#fff;font-weight:600}
+
+/* ---- FORM CARD: class name is a tracking contract, do not rename ---- */
+.form-card{background:var(--panel);border:1px solid var(--line);border-radius:0;padding:26px;box-shadow:0 18px 50px rgba(10,14,17,.28)}
+.form-card h2{margin:0 0 6px;font-family:var(--display);font-size:23px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--ink)}
+.form-card .fine{color:var(--muted);font-size:15px;margin:0 0 18px}
+.bar{display:flex;gap:6px;margin-bottom:20px}
+.bar i{flex:1;height:3px;border-radius:0;background:var(--line)}
+.bar i.on{background:var(--brand)}
+label{display:block;font-family:var(--display);font-weight:600;font-size:12px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink);margin:16px 0 7px}
+select,input{width:100%;background:#fff;border:1px solid #CFCAC2;color:var(--ink);border-radius:0;padding:14px 12px;font-size:16px;font-family:var(--body)}
+select:focus,input:focus{outline:2px solid var(--brand);outline-offset:1px;border-color:var(--brand)}
+.hint{color:var(--muted);font-size:13px;margin:6px 0 0}
+.btn{width:100%;margin-top:20px;background:var(--brand);color:#fff;border:0;border-radius:0;padding:17px;
+  font-family:var(--display);font-size:15px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;cursor:pointer}
+.btn:hover{background:var(--brand-hover)}
+.back{display:inline-block;margin-top:12px;color:var(--muted);font-size:14px;text-decoration:none;cursor:pointer}
+.err{color:#B3261E;font-size:13px;margin-top:6px;display:none}
+.hp{position:absolute;left:-9999px;opacity:0;height:0;width:0}
+
+/* ---- light sections, their warm palette ---- */
+section{padding:66px 0;border-top:1px solid var(--line)}
+section:nth-of-type(even):not(.final){background:var(--panel-alt)}
+h2.sec{font-family:var(--display);font-size:42px;font-weight:700;text-transform:uppercase;letter-spacing:.03em;margin:0 0 10px;color:var(--ink)}
+.lede{color:var(--muted);margin:0 0 30px;max-width:62ch;font-size:18px}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:0;padding:22px}
+.card h3{margin:0 0 8px;font-family:var(--display);font-size:17px;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+.card p{margin:0;color:var(--muted);font-size:16px}
+.callout{background:rgba(10,70,39,.06);border-left:3px solid var(--brand);border-radius:0;padding:22px;margin-top:22px}
+.callout p{margin:0;font-size:18px}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;counter-reset:s}
+.step{background:var(--panel);border:1px solid var(--line);border-radius:0;padding:24px}
+.step:before{counter-increment:s;content:counter(s);display:flex;align-items:center;justify-content:center;
+  width:38px;height:38px;border-radius:0;background:var(--brand);color:#fff;font-family:var(--display);font-weight:600;margin-bottom:14px}
+.step h3{font-family:var(--display);text-transform:uppercase;letter-spacing:.06em}
+.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.gallery img{width:100%;height:240px;object-fit:cover;border-radius:0;border:1px solid var(--line);display:block}
+.cap{color:var(--muted);font-size:13px;margin-top:8px}
+details{background:var(--panel);border:1px solid var(--line);border-radius:0;padding:17px 19px;margin-bottom:10px}
+details summary{cursor:pointer;font-family:var(--display);font-weight:600;font-size:16px;text-transform:uppercase;letter-spacing:.04em;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary:after{content:"+";float:right;color:var(--brand);font-weight:700}
+details[open] summary:after{content:"–"}
+details p{color:var(--muted);margin:12px 0 0}
+
+/* final CTA: dark photo band, mirrors their closing section */
+.final{text-align:center;background:linear-gradient(rgba(10,14,17,.86),rgba(10,14,17,.86)),url('assets/flagstone-patio-boulders_95b6c924.jpeg') center/cover no-repeat;border-top:0}
+.final h2.sec,.final p{color:#fff}
+.final .lede{color:rgba(255,255,255,.86);margin-left:auto;margin-right:auto}
+.final .btn{max-width:440px;margin:26px auto 0;display:block;text-decoration:none;line-height:1.2}
+footer{padding:30px 0 44px;color:var(--muted);font-size:14px;text-align:center;border-top:1px solid var(--line);background:var(--bg)}
+
+@media(max-width:900px){
+  .hero{padding:26px 0 40px}
+  /* ⛔ LOCKED SPEC: form ABOVE the fold. On mobile the hero copy pushed it under,
+     so the left column dissolves and the form is ordered directly after the H1.
+     Sub-copy and trust chips drop below it. Do not reorder back. */
+  .hero-grid{grid-template-columns:1fr;gap:0}
+  .hero-grid > div:first-child{display:contents}
+  .hero-grid .eyebrow{order:1}
+  .hero-grid h1{order:2}
+  .hero-grid .form-card{order:3;margin:4px 0 22px}
+  .hero-grid .sub{order:4}
+  .hero-grid .trust{order:5}
+  h1{font-size:27px;letter-spacing:.02em;max-width:none;margin:0 0 16px}
+  .eyebrow{margin:0 0 12px;font-size:11px;letter-spacing:.20em}
+  .eyebrow:before{width:28px}
+  .sub{font-size:17px;margin:0 0 18px}
+  h1 .script{font-size:26px}
+  .sub{font-size:18px}
+  h2.sec{font-size:30px}
+  .cols,.steps,.gallery{grid-template-columns:1fr}
+  .gallery img{height:210px}
+}
+</style>
+</head>
+<body>
+
+<div class="topband">
+<div class="wrap">
+  <div class="topbar">
+    <span class="logo-chip"><img class="logo-img" src="assets/kdt-logo-white_knockout.png" alt="KDT Landscaping"></span>
+    <a class="tel" href="tel:+12502587125">Call (250) 258-7125</a>
+  </div>
+</div>
+</div>
+
+<!-- ================= HERO ================= -->
+<div class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <p class="eyebrow">New Build Landscaping &middot; Kelowna &amp; the Okanagan</p>
+      <h1>The house is finished. The yard is still a construction site. <em>We take it from dirt to done.</em></h1>
+      <p class="sub">Complete landscape packages for new construction. Grading, drainage, hardscape, lawn, planting and irrigation, coordinated in one go.</p>
+      <ul class="trust">
+        <li><b>Family run</b> since 1999</li>
+        <li><b>Mike &amp; Tyson</b> on site, not just on the invoice</li>
+        <li>Kelowna to Penticton &amp; the Okanagan Valley</li>
+      </ul>
+    </div>
+
+    <!-- ⚠️ class="form-card" is the tracking contract. Renaming it silently breaks the wiring script. -->
+    <form class="form-card" method="POST" action="#" id="kdtForm">
+      <div class="bar"><i class="on" id="b1"></i><i id="b2"></i></div>
+
+      <!-- STEP 1 — qualifiers only, NO contact fields -->
+      <div id="step1">
+        <h2>What does the property need?</h2>
+        <p class="fine">Three quick questions. Takes about twenty seconds.</p>
+
+        <label for="reason">What does the property need?</label>
+        <select id="reason" name="reason" required>
+          <option value="" disabled selected>Choose one</option>
+          <option>Full new build package</option>
+          <option>Front yard only</option>
+          <option>Backyard only</option>
+          <option>Grading and drainage</option>
+          <option>Builder or developer enquiry</option>
+          <option>Not sure yet</option>
+        </select>
+
+        <label for="timeframe">When does it need to be finished?</label>
+        <select id="timeframe" name="timeframe" required>
+          <option value="" disabled selected>Choose one</option>
+          <option>As soon as you can fit me in</option>
+          <option>Within the next few months</option>
+          <option>Later this season</option>
+          <option>Booking for next season</option>
+        </select>
+
+        <label for="town">Where is the property?</label>
+        <select id="town" name="town" required>
+          <option value="" disabled selected>Choose one</option>
+          <option>Kelowna</option>
+          <option>West Kelowna</option>
+          <option>Lake Country</option>
+          <option>Peachland</option>
+          <option>Penticton</option>
+          <option>Summerland</option>
+          <option>Other / nearby</option>
+        </select>
+
+        <p class="err" id="e1">Pick an answer for all three so we know what we are looking at.</p>
+        <button type="button" class="btn" id="next">Continue</button>
+      </div>
+
+      <!-- STEP 2 — contact only -->
+      <div id="step2" style="display:none">
+        <h2>Where do we reach you?</h2>
+        <p class="fine">Mike or Tyson will call you back, usually the same day.</p>
+
+        <label for="name">Your name</label>
+        <input id="name" name="name" type="text" autocomplete="name" required>
+
+        <label for="phone">Phone</label>
+        <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required>
+
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" autocomplete="email" required>
+        <p class="hint">So we can send your quote in writing.</p>
+
+        <p class="err" id="e2">We need all three so we can actually get back to you.</p>
+        <button type="submit" class="btn">Book my site visit</button>
+        <a class="back" id="back">&larr; Back</a>
+      </div>
+
+      <!-- honeypot: bots fill this, the Railway webhook drops any submission where it is non-empty -->
+      <input class="hp" type="text" name="company" autocomplete="off" tabindex="-1" aria-hidden="true">
+    </form>
+  </div>
+</div>
+
+<!-- ================= PROBLEM ================= -->
+<section><div class="wrap">
+  <h2 class="sec">What we usually find on Okanagan properties</h2>
+  <p class="lede">If any of these sound like yours, it is fixable. It is just not a weekend job.</p>
+  <div class="cols">
+    <div class="card"><h3>Compacted builder fill</h3><p>Nothing grows in it and water sits on it. It has to be dealt with before anything goes in.</p></div>
+    <div class="card"><h3>Drainage nobody planned for</h3><p>New lots often move water straight at the house. Fixing it after the landscaping is in costs far more.</p></div>
+    <div class="card"><h3>A deadline attached to possession</h3><p>Occupancy, landscape deposits, or a buyer waiting. The yard is on someone else's clock.</p></div>
+    <div class="card"><h3>Five trades, no coordination</h3><p>Irrigation, hardscape, lawn and planting each turning up at the wrong moment.</p></div>
+  </div>
+  <div class="callout"><p>The yard is usually the last thing people spend money on and the thing they end up using every single day of summer.</p></div>
+</div></section>
+
+<!-- ================= HOW IT WORKS ================= -->
+<section><div class="wrap">
+  <h2 class="sec">How it works</h2>
+  <p class="lede">No call centre. No runaround. You deal with the people doing the work.</p>
+  <div class="steps">
+    <div class="step"><h3>You tell us what you want</h3><p>Send the form or call. Takes a couple of minutes.</p></div>
+    <div class="step"><h3>We come and look</h3><p>Mike or Tyson walks the property with you and talks through what is actually possible on your grade and your budget.</p></div>
+    <div class="step"><h3>You get it in writing</h3><p>A written quote with the scope laid out. No pressure to sign anything on the day.</p></div>
+  </div>
+</div></section>
+
+<!-- ================= PROOF ================= -->
+<section><div class="wrap">
+  <h2 class="sec">Work we have done around the Okanagan</h2>
+  <p class="lede">Real properties, real crews, no stock photos.</p>
+  <div class="gallery">
+    <img src="assets/newBuild_613aeb77.jpeg" alt="Complete landscape package on a new build, KDT Landscaping Kelowna">
+    <img src="assets/newBuild2_355265dd.jpeg" alt="New construction landscaping in the Okanagan, KDT Landscaping Kelowna">
+    <img src="assets/okanaganYard_a3745745.jpeg" alt="Finished new build yard, KDT Landscaping Kelowna">
+  </div>
+  <p class="cap">Photos: KDT's own, pulled from kdtlandscape.ca. Zoom-checked for third-party branding (only equipment-manufacturer marks, no competitor contractors).</p>
+</div></section>
+
+<!-- ================= WHY US + DISQUALIFIER ================= -->
+<section><div class="wrap">
+  <h2 class="sec">Why people call us, and who we are not for</h2>
+  <div class="cols">
+    <div class="card"><h3>One crew, one schedule</h3><p>Grading through to planting handled together, so nothing waits on someone else.</p></div>
+    <div class="card"><h3>We start under the surface</h3><p>On a new build the soil and the drainage are the whole job. The pretty part is the easy part.</p></div>
+  </div>
+  <div class="callout"><p><b>Straight up:</b> we are not the cheapest, and we are not the right call for a mow-and-blow or a quick tidy before you list the house. If you want the lowest number, someone will beat us. If you want a wall that is still straight in fifteen years, that is the work we do.</p></div>
+</div></section>
+
+<!-- ================= FAQ ================= -->
+<section><div class="wrap">
+  <h2 class="sec">Questions people ask before they call</h2>
+  <details><summary>Does it cost anything to have you come out?</summary><p>No. We come and look at the property, talk through what you want, and send you a written quote. If it is not for you, that is completely fine.</p></details>
+  <details><summary>What happens after I send the form?</summary><p>Mike or Tyson calls you back, usually the same day. We book a time to come and walk the property with you.</p></details>
+  <details><summary>How long does the visit take?</summary><p>Usually half an hour. Longer if it is a full backyard and you want to talk through options.</p></details>
+  <details><summary>Do I have to decide on the day?</summary><p>No. You get the quote in writing and you take as long as you need. We would rather you were sure.</p></details>
+  <details><summary>What if my yard has drainage or grade problems?</summary><p>That is most of what we deal with. We will tell you straight if something needs sorting before the nice part goes in, and why.</p></details>
+  <details><summary>Do you come out to my town?</summary><p>Kelowna, West Kelowna, Lake Country, Peachland, Summerland and Penticton. If you are nearby, ask. <!-- Service area locked 2026-07-29. Do not edit this list without checking the client ledger. --></p></details>
+  <details><summary>Who actually turns up?</summary><p>Mike, Tyson and the crew. We do not hand your job to a subcontractor you have never spoken to.</p></details>
+  <details><summary>Can you work with what is already there?</summary><p>Often, yes. Sometimes the existing base is worth keeping and sometimes it will fail again. We will tell you which.</p></details>
+</div></section>
+
+<!-- ================= FINAL CTA ================= -->
+<section class="final"><div class="wrap">
+  <h2 class="sec">Tell us about the yard</h2>
+  <p class="lede" style="margin-left:auto;margin-right:auto">Twenty seconds now, and someone who actually builds these things will call you back.</p>
+  <a class="btn" href="#kdtForm" onclick="document.getElementById('kdtForm').scrollIntoView({behavior:'smooth'});return false;">Get my site visit booked</a>
+</div></section>
+
+<footer>
+  <div class="wrap">
+    KDT Landscaping Ltd. &middot; Kelowna, BC &middot; (250) 258-7125<br>
+    Serving Kelowna, West Kelowna, Lake Country, Peachland, Summerland &amp; Penticton
+    <!-- ⛔ DO NOT add an insurance or licence line until the current COI is in hand and a licence is confirmed to exist. -->
+  </div>
+</footer>
+
+<script>
+(function(){
+  var s1=document.getElementById('step1'), s2=document.getElementById('step2');
+  var b1=document.getElementById('b1'), b2=document.getElementById('b2');
+  var e1=document.getElementById('e1'), e2=document.getElementById('e2');
+  document.getElementById('next').addEventListener('click',function(){
+    var r=document.getElementById('reason').value,
+        t=document.getElementById('timeframe').value,
+        w=document.getElementById('town').value;
+    if(!r||!t||!w){e1.style.display='block';return;}
+    e1.style.display='none';
+    // MEASUREMENT (non-optional): without this you cannot see step1 -> step2 drop-off.
+    if(window.dataLayer) window.dataLayer.push({event:'form_step_1',reason:r,timeframe:t,town:w});
+    if(window.fbq) fbq('trackCustom','FormStep1',{reason:r,timeframe:t,town:w});
+    s1.style.display='none'; s2.style.display='block'; b2.classList.add('on');
+    s2.scrollIntoView({behavior:'smooth',block:'nearest'});
+  });
+  document.getElementById('back').addEventListener('click',function(){
+    s2.style.display='none'; s1.style.display='block'; b2.classList.remove('on');
+  });
+  function cookie(k){
+    var m=document.cookie.match('(^|;)\\s*'+k+'\\s*=\\s*([^;]+)'); return m?m.pop():'';
+  }
+  function eventId(){
+    return 'kdt-'+Date.now()+'-'+Math.floor(Math.random()*1e9).toString(36);
+  }
+  document.getElementById('kdtForm').addEventListener('submit',function(ev){
+    ev.preventDefault();
+    var n=document.getElementById('name').value.trim(),
+        p=document.getElementById('phone').value.trim(),
+        m=document.getElementById('email').value.trim();
+    if(!n||!p||!m){e2.style.display='block';return;}
+    e2.style.display='none';
+
+    var C=window.KDT_TRACK||{}, eid=eventId();
+    var payload={
+      name:n, phone:p, email:m,
+      reason:document.getElementById('reason').value,
+      timeframe:document.getElementById('timeframe').value,
+      town:document.getElementById('town').value,
+      company:document.querySelector('input[name=company]').value,   // honeypot: server drops if non-empty
+      gclid:cookie('_kdt_gclid'),
+      fbp:cookie('_fbp'), fbc:cookie('_fbc'),
+      event_id:eid,                                                  // shared -> browser + server CAPI dedupe
+      page:location.pathname.replace(/^\//,'').replace(/\.html$/,'')
+    };
+
+    var btn=this.querySelector('button[type=submit]');
+    if(btn){btn.disabled=true;btn.textContent='Sending...';}
+
+    function done(ok){
+      var card=document.querySelector('.form-card');
+      card.innerHTML = ok
+        ? '<h2>Got it, '+n.split(' ')[0].replace(/[<>]/g,'')+'</h2>'
+          +'<p class="fine">Mike or Tyson will call you on '+p.replace(/[<>]/g,'')+' to book a time to come and look at the property. '
+          +'If it is easier, call us on 250-258-7125.</p>'
+        : '<h2>That did not send</h2>'
+          +'<p class="fine">Something went wrong on our end. Please call us on 250-258-7125 and we will sort it straight away.</p>';
+    }
+
+    /* The lead POST depends on the ENDPOINT ONLY. A missing pixel is a measurement
+       problem; blocking the POST would lose the customer as well as the data.
+       Never conflate "we cannot measure this lead" with "we cannot take it". */
+    if(!window.KDT_READY.endpoint){
+      console.error('[KDT] submit blocked: no endpoint to POST to.');
+      done(false); return;
+    }
+
+    fetch(C.endpoint,{
+      method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload)
+    }).then(function(r){
+      if(!r.ok) throw new Error('status '+r.status);
+      /* Browser Lead with the SHARED event_id. Server fires CAPI Lead with the same id -> dedupes.
+         The qualifier answers are what make this a Lead rather than a raw fill. */
+      if(window.fbq) fbq('track','Lead',{},{eventID:eid});
+      if(window.gtag && window.KDT_READY.gads) gtag('event','conversion',{send_to:C.gadsId+'/'+C.gadsLabel, event_id:eid});
+      if(window.dataLayer) dataLayer.push({event:'lp_lead', event_id:eid, page:payload.page});
+      done(true);
+    }).catch(function(err){
+      console.error('[KDT] lead POST failed:',err);
+      done(false);
+    });
+  });
+})();
+</script>
+</body>
+</html>
