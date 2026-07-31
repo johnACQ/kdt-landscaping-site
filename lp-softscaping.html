@@ -8,11 +8,11 @@
 <!-- ⚠️ HEAD TRACKING: base pixel + PageView ONLY. Qualified Lead fires server-side via Railway CAPI. Do not add a Lead event here. -->
 <script>
 /* ============================================================
-   KDT TRACKING CONFIG  —  ⛔ PLACEHOLDERS, NOT YET LIVE
-   Replace all four values, then run:  /my-precheck kdt --tracking
-   None of these accounts existed as of 2026-07-29:
-     - no KDT GA4 property   - no KDT Meta pixel
-     - no KDT Google Ads acct - no KDT Railway endpoint
+   KDT TRACKING CONFIG  —  3 of 4 LIVE as of 2026-07-31
+   GA4 + Google Ads (tag verified firing) + Railway endpoint
+   (E2E-tested: lead -> GHL contact -> Speed to Lead email).
+   metaPixel is the only placeholder left — never point it at
+   Apex's own pixel. When it lands: /my-precheck kdt --tracking
    ============================================================ */
 window.KDT_TRACK = {
   gadsId:    'AW-18360980753',          // Google Ads conversion tag (KDT 940-595-3731)
@@ -93,7 +93,8 @@ window.KDT_TRACK = {
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;600;700&family=Source+Sans+3:wght@300;400;600&family=Cormorant+Garamond:ital,wght@1,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;600;700&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="assets/okanaganYard_a3745745.jpeg">
 <style>
 /* ============================================================
    KDT LANDSCAPING — design tokens sampled from the LIVE site
@@ -257,6 +258,7 @@ footer{padding:30px 0 44px;color:var(--muted);font-size:14px;text-align:center;b
       <ul class="trust">
         <li><b>Family run</b> since 1999</li>
         <li><b>Mike &amp; Tyson</b> on site, not just on the invoice</li>
+        <li><b>Award-winning</b> work</li>
         <li>Kelowna to Penticton &amp; the Okanagan Valley</li>
       </ul>
     </div>
@@ -268,9 +270,9 @@ footer{padding:30px 0 44px;color:var(--muted);font-size:14px;text-align:center;b
       <!-- STEP 1 — qualifiers only, NO contact fields -->
       <div id="step1">
         <h2>What are you looking to plant or lay?</h2>
-        <p class="fine">Three quick questions. Takes about twenty seconds.</p>
+        <p class="fine">Three quick questions, then we book a time to come look.</p>
 
-        <label for="reason">What are you looking to plant or lay?</label>
+        <label for="reason">What are you looking to get done?</label>
         <select id="reason" name="reason" required>
           <option value="" disabled selected>Choose one</option>
           <option>New lawn or sod</option>
@@ -317,9 +319,9 @@ footer{padding:30px 0 44px;color:var(--muted);font-size:14px;text-align:center;b
         <label for="phone">Phone</label>
         <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required>
 
-        <label for="email">Email</label>
-        <input id="email" name="email" type="email" autocomplete="email" required>
-        <p class="hint">So we can send your quote in writing.</p>
+        <label for="email">Email (optional)</label>
+        <input id="email" name="email" type="email" autocomplete="email" autocapitalize="off" autocorrect="off">
+        <p class="hint">If you want the quote emailed as well as talked through.</p>
 
         <p class="err" id="e2">We need all three so we can actually get back to you.</p>
         <button type="submit" class="btn">Book my site visit</button>
@@ -365,7 +367,9 @@ footer{padding:30px 0 44px;color:var(--muted);font-size:14px;text-align:center;b
     <img src="assets/okanaganYard_a3745745.jpeg" alt="Finished lawn, beds and planting in an Okanagan backyard, KDT Landscaping Kelowna">
     <img src="assets/newBuild_613aeb77.jpeg" alt="Landscape planting on a new build property, KDT Landscaping Kelowna">
   </div>
-  <p class="cap">Photos: KDT's own, pulled from kdtlandscape.ca. Zoom-checked for third-party branding (only equipment-manufacturer marks, no competitor contractors).</p>
+  <!-- Build provenance: photos are KDT's own from kdtlandscape.ca, zoom-checked for
+       third-party branding 2026-07-29 (only equipment-manufacturer marks). -->
+  <p class="cap">All our own work, on real properties around Kelowna and the Okanagan.</p>
 </div></section>
 
 <!-- ================= WHY US + DISQUALIFIER ================= -->
@@ -375,7 +379,7 @@ footer{padding:30px 0 44px;color:var(--muted);font-size:14px;text-align:center;b
     <div class="card"><h3>We prep what is underneath</h3><p>Soil and grading first. Planting into unprepared ground is money you spend twice.</p></div>
     <div class="card"><h3>Plants picked for this valley</h3><p>Okanagan sun, wind and winter are specific. What thrives on the coast often does not here.</p></div>
   </div>
-  <div class="callout"><p><b>Straight up:</b> we are not the cheapest, and we are not the right call for a mow-and-blow or a quick tidy before you list the house. If you want the lowest number, someone will beat us. If you want a wall that is still straight in fifteen years, that is the work we do.</p></div>
+  <div class="callout"><p><b>Straight up:</b> we are not the cheapest, and we are not the right call for a mow-and-blow or a quick tidy before you list the house. If you want the lowest number, someone will beat us. If you want a lawn that still takes in year five, that is the work we do.</p></div>
 </div></section>
 
 <!-- ================= FAQ ================= -->
@@ -437,7 +441,7 @@ footer{padding:30px 0 44px;color:var(--muted);font-size:14px;text-align:center;b
     var n=document.getElementById('name').value.trim(),
         p=document.getElementById('phone').value.trim(),
         m=document.getElementById('email').value.trim();
-    if(!n||!p||!m){e2.style.display='block';return;}
+    if(!n||!p){e2.style.display='block';return;}
     e2.style.display='none';
 
     var C=window.KDT_TRACK||{}, eid=eventId();

@@ -8,11 +8,11 @@
 <!-- ⚠️ HEAD TRACKING: base pixel + PageView ONLY. Qualified Lead fires server-side via Railway CAPI. Do not add a Lead event here. -->
 <script>
 /* ============================================================
-   KDT TRACKING CONFIG  —  ⛔ PLACEHOLDERS, NOT YET LIVE
-   Replace all four values, then run:  /my-precheck kdt --tracking
-   None of these accounts existed as of 2026-07-29:
-     - no KDT GA4 property   - no KDT Meta pixel
-     - no KDT Google Ads acct - no KDT Railway endpoint
+   KDT TRACKING CONFIG  —  3 of 4 LIVE as of 2026-07-31
+   GA4 + Google Ads (tag verified firing) + Railway endpoint
+   (E2E-tested: lead -> GHL contact -> Speed to Lead email).
+   metaPixel is the only placeholder left — never point it at
+   Apex's own pixel. When it lands: /my-precheck kdt --tracking
    ============================================================ */
 window.KDT_TRACK = {
   gadsId:    'AW-18360980753',          // Google Ads conversion tag (KDT 940-595-3731)
@@ -93,7 +93,8 @@ window.KDT_TRACK = {
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;600;700&family=Source+Sans+3:wght@300;400;600&family=Cormorant+Garamond:ital,wght@1,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;600;700&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="assets/commercialWalkway_4b85ed18_CROPPED.jpeg">
 <style>
 /* ============================================================
    KDT LANDSCAPING — design tokens sampled from the LIVE site
@@ -257,6 +258,7 @@ footer{padding:30px 0 44px;color:var(--muted);font-size:14px;text-align:center;b
       <ul class="trust">
         <li><b>Family run</b> since 1999</li>
         <li><b>Mike &amp; Tyson</b> on site, not just on the invoice</li>
+        <li><b>Award-winning</b> work</li>
         <li>Kelowna to Penticton &amp; the Okanagan Valley</li>
       </ul>
     </div>
@@ -268,9 +270,9 @@ footer{padding:30px 0 44px;color:var(--muted);font-size:14px;text-align:center;b
       <!-- STEP 1 — qualifiers only, NO contact fields -->
       <div id="step1">
         <h2>What is the scope?</h2>
-        <p class="fine">Three quick questions. Takes about twenty seconds.</p>
+        <p class="fine">Three quick questions, then we book a time to come look.</p>
 
-        <label for="reason">What is the scope?</label>
+        <label for="reason">What are you looking to get done?</label>
         <select id="reason" name="reason" required>
           <option value="" disabled selected>Choose one</option>
           <option>New commercial development</option>
@@ -317,9 +319,9 @@ footer{padding:30px 0 44px;color:var(--muted);font-size:14px;text-align:center;b
         <label for="phone">Phone</label>
         <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required>
 
-        <label for="email">Email</label>
-        <input id="email" name="email" type="email" autocomplete="email" required>
-        <p class="hint">So we can send your quote in writing.</p>
+        <label for="email">Email (optional)</label>
+        <input id="email" name="email" type="email" autocomplete="email" autocapitalize="off" autocorrect="off">
+        <p class="hint">If you want the quote emailed as well as talked through.</p>
 
         <p class="err" id="e2">We need all three so we can actually get back to you.</p>
         <button type="submit" class="btn">Book my site visit</button>
@@ -342,7 +344,7 @@ footer{padding:30px 0 44px;color:var(--muted);font-size:14px;text-align:center;b
     <div class="card"><h3>Maintenance cost designed in by accident</h3><p>Planting and irrigation choices at build time decide the annual bill forever.</p></div>
     <div class="card"><h3>Accessibility and grade requirements</h3><p>Walkway grades and transitions are not somewhere to improvise.</p></div>
   </div>
-  <div class="callout"><p>The yard is usually the last thing people spend money on and the thing they end up using every single day of summer.</p></div>
+  <div class="callout"><p><b>Straight up:</b> we are not the cheapest, and we are not a mow-and-blow maintenance crew. If the contract is going to the lowest number, someone will beat us. If you want a site that still holds up under real traffic in ten years, that is the work we do.</p></div>
 </div></section>
 
 <!-- ================= HOW IT WORKS ================= -->
@@ -365,17 +367,19 @@ footer{padding:30px 0 44px;color:var(--muted);font-size:14px;text-align:center;b
     <img src="assets/retainingWall_03f9f91d.jpeg" alt="Retaining wall structure, KDT Landscaping Kelowna">
     <img src="assets/irrigation_05ac4256.jpeg" alt="Irrigation installation, KDT Landscaping Kelowna">
   </div>
-  <p class="cap">Photos: KDT's own, pulled from kdtlandscape.ca. Zoom-checked for third-party branding (only equipment-manufacturer marks, no competitor contractors).</p>
+  <!-- Build provenance: photos are KDT's own from kdtlandscape.ca, zoom-checked for
+       third-party branding 2026-07-29 (only equipment-manufacturer marks). -->
+  <p class="cap">All our own work, on real properties around Kelowna and the Okanagan.</p>
 </div></section>
 
 <!-- ================= WHY US + DISQUALIFIER ================= -->
 <section><div class="wrap">
   <h2 class="sec">Why people call us, and who we are not for</h2>
   <div class="cols">
-    <div class="card"><h3>We work to a spec and a schedule</h3><p>Twenty seven years of coordinating around other trades on live sites.</p></div>
+    <div class="card"><h3>We work to a spec and a schedule</h3><p>Landscape construction that turns up when the schedule says and builds what the drawings say.</p></div>
     <div class="card"><h3>Built for the traffic it will get</h3><p>Commercial base and material choices, not scaled-up residential.</p></div>
   </div>
-  <div class="callout"><p><b>Straight up:</b> we are not the cheapest, and we are not the right call for a mow-and-blow or a quick tidy before you list the house. If you want the lowest number, someone will beat us. If you want a wall that is still straight in fifteen years, that is the work we do.</p></div>
+  <div class="callout"><p><b>Straight up:</b> we are not the cheapest, and we are not the right call for a mow-and-blow or a quick tidy before you list the house. If you want the lowest number, someone will beat us. If you want a site that still holds up under real traffic in ten years, that is the work we do.</p></div>
 </div></section>
 
 <!-- ================= FAQ ================= -->
@@ -383,9 +387,9 @@ footer{padding:30px 0 44px;color:var(--muted);font-size:14px;text-align:center;b
   <h2 class="sec">Questions people ask before they call</h2>
   <details><summary>Does it cost anything to have you come out?</summary><p>No. We come and look at the property, talk through what you want, and send you a written quote. If it is not for you, that is completely fine.</p></details>
   <details><summary>What happens after I send the form?</summary><p>Mike or Tyson calls you back, usually the same day. We book a time to come and walk the property with you.</p></details>
-  <details><summary>How long does the visit take?</summary><p>Usually half an hour. Longer if it is a full backyard and you want to talk through options.</p></details>
-  <details><summary>Do I have to decide on the day?</summary><p>No. You get the quote in writing and you take as long as you need. We would rather you were sure.</p></details>
-  <details><summary>What if my yard has drainage or grade problems?</summary><p>That is most of what we deal with. We will tell you straight if something needs sorting before the nice part goes in, and why.</p></details>
+  <details><summary>Can you schedule around other trades?</summary><p>Yes. Landscape is usually last on site, so we plan for the date moving and still hit the handover.</p></details>
+  <details><summary>Can you work to a tender or a spec?</summary><p>Yes. Send the drawings or the spec with the form, or tell us where to find them, and we will price to it.</p></details>
+  <details><summary>What about accessibility and grade requirements?</summary><p>Walkway grades and transitions get built to the spec, not improvised. That is most of what commercial hardscape is.</p></details>
   <details><summary>Do you come out to my town?</summary><p>Kelowna, West Kelowna, Lake Country, Peachland, Summerland and Penticton. If you are nearby, ask. <!-- Service area locked 2026-07-29. Do not edit this list without checking the client ledger. --></p></details>
   <details><summary>Who actually turns up?</summary><p>Mike, Tyson and the crew. We do not hand your job to a subcontractor you have never spoken to.</p></details>
   <details><summary>Can you work with what is already there?</summary><p>Often, yes. Sometimes the existing base is worth keeping and sometimes it will fail again. We will tell you which.</p></details>
@@ -393,7 +397,7 @@ footer{padding:30px 0 44px;color:var(--muted);font-size:14px;text-align:center;b
 
 <!-- ================= FINAL CTA ================= -->
 <section class="final"><div class="wrap">
-  <h2 class="sec">Tell us about the yard</h2>
+  <h2 class="sec">Tell us about the site</h2>
   <p class="lede" style="margin-left:auto;margin-right:auto">Twenty seconds now, and someone who actually builds these things will call you back.</p>
   <a class="btn" href="#kdtForm" onclick="document.getElementById('kdtForm').scrollIntoView({behavior:'smooth'});return false;">Get my site visit booked</a>
 </div></section>
@@ -437,7 +441,7 @@ footer{padding:30px 0 44px;color:var(--muted);font-size:14px;text-align:center;b
     var n=document.getElementById('name').value.trim(),
         p=document.getElementById('phone').value.trim(),
         m=document.getElementById('email').value.trim();
-    if(!n||!p||!m){e2.style.display='block';return;}
+    if(!n||!p){e2.style.display='block';return;}
     e2.style.display='none';
 
     var C=window.KDT_TRACK||{}, eid=eventId();
