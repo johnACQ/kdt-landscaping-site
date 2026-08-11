@@ -203,12 +203,12 @@ footer{padding:30px 0 44px;color:var(--muted);font-size:14px;text-align:center;b
 
     <h2>Cookies, analytics and advertising</h2>
     <p>Our website uses Google Analytics and Google Ads. These set cookies in your browser that tell us how people found the site and which pages they used, and they let us see which of our ads led to an enquiry. This is counting and measurement, not a profile of you as a person, and we do not sell your information to anyone.</p>
+    <p>When you send us an enquiry we also share a scrambled version of your email address and phone number with Google, so it can tell us that the enquiry came from one of our ads. The scrambling is one way and happens in your browser, so Google receives a string of characters rather than your actual details, and it is used only to match your enquiry to an ad click.</p>
     <p>You can clear or block these cookies in your browser settings at any time. Doing so will not stop you using the site or contacting us.</p>
-    <!-- ⛔ Enhanced Conversions is NOT described here on purpose. The moment
-         KDT_TRACK.enhancedConversions is flipped true on the landing pages, add the
-         "scrambled email and phone go to Google" paragraph from
-         drafts/privacy_policy_addition_DRAFT.md Part B, in the SAME change.
-         Policy and behaviour move together, in that order. -->
+    <!-- This paragraph went live in the SAME commit that set
+         KDT_TRACK.enhancedConversions = true on the landing pages, 2026-08-11.
+         If Enhanced Conversions is ever switched back off, remove it again.
+         Policy and behaviour move together. -->
 
     <h2>How long we keep it</h2>
     <p>We keep enquiry and customer records for as long as needed to serve you and to meet our legal and accounting obligations, then delete or anonymise them.</p>

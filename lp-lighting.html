@@ -18,7 +18,10 @@ window.KDT_TRACK = {
   gadsId:    'AW-18360980753',          // Google Ads conversion tag (KDT 940-595-3731)
   gadsLabel: 'RChkCJ_76tkcEJGqmbNE',    // 'Submit lead form' conversion LABEL - send_to needs BOTH
   phoneLabel:'K__6CN_W7N8cEJGqmbNE',    // 'Phone call click' LABEL - SECONDARY, measured not bid on
-  enhancedConversions: false,           // ⛔ see the submit handler before flipping this true
+  enhancedConversions: true,            // ON 2026-08-11. Google side: customer data terms
+                                        // ACCEPTED + enhanced_conversions_for_leads_enabled
+                                        // TRUE (API read-back). Disclosed in privacy.html
+                                        // in the SAME commit that set this true.
   ga4Id:     'G-0VLPDYM7LC',            // GA4 measurement ID
   metaPixel: 'XXXXXXXXXXXXXXX',         // Meta pixel / dataset ID
   endpoint:  'https://profound-truth-production-4190.up.railway.app/webhook/kdt/lp-lead'
