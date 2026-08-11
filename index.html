@@ -17,6 +17,7 @@
 window.KDT_TRACK = {
   gadsId:    'AW-18360980753',          // Google Ads conversion tag (KDT 940-595-3731)
   gadsLabel: 'RChkCJ_76tkcEJGqmbNE',    // 'Submit lead form' conversion LABEL - send_to needs BOTH
+  phoneLabel:'K__6CN_W7N8cEJGqmbNE',    // 'Phone call click' LABEL - SECONDARY, measured not bid on
   ga4Id:     'G-0VLPDYM7LC',            // GA4 measurement ID
   metaPixel: 'XXXXXXXXXXXXXXX',         // Meta pixel / dataset ID
   endpoint:  'https://profound-truth-production-4190.up.railway.app/webhook/kdt/lp-lead'
@@ -63,6 +64,34 @@ window.KDT_TRACK = {
   gtag('js', new Date());
   if (R.gads) gtag('config', C.gadsId);            // base + config only
   if (R.ga4)  gtag('config', C.ga4Id);
+
+  /* PHONE-CLICK CONVERSION.
+     A tap on the header number is a lead for this trade, and without this it
+     produced no signal at all - Google would optimise on form fills only and
+     the reporting would understate the account.
+
+     ⛔ DELEGATED, CAPTURE PHASE, and matched with closest(). Do NOT rewrite as
+        document.querySelectorAll('a[href^="tel:"]').forEach(...)
+     That binds once at parse time, so it silently misses any tel: link that is
+     added, re-rendered or revealed later. That exact pattern is the Dustin bug
+     that went 23 days recording nothing.
+
+     Fires the SECONDARY 'Phone call click' action, deliberately not the lead
+     action - a tap is not a booked job, and it must not compete with a real
+     form fill for the bidding signal. */
+  document.addEventListener('click', function(e){
+    var a = e.target && e.target.closest && e.target.closest('a[href^="tel:"]');
+    if (!a) return;
+    if (!(window.gtag && R.gads && C.phoneLabel &&
+          String(C.phoneLabel).indexOf('XXXX') === -1)) return;
+    if (a.__kdtFired) return;                       // one per element per page view
+    a.__kdtFired = true;
+    gtag('event', 'conversion', {
+      send_to: C.gadsId + '/' + C.phoneLabel,
+      event_id: 'kdt-tel-' + Date.now()
+    });
+    if (R.ga4) gtag('event', 'phone_click', { link_url: a.getAttribute('href') });
+  }, true);
 })();
 </script>
 
