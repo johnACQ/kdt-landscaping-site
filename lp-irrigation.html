@@ -18,6 +18,7 @@ window.KDT_TRACK = {
   gadsId:    'AW-18360980753',          // Google Ads conversion tag (KDT 940-595-3731)
   gadsLabel: 'RChkCJ_76tkcEJGqmbNE',    // 'Submit lead form' conversion LABEL - send_to needs BOTH
   phoneLabel:'K__6CN_W7N8cEJGqmbNE',    // 'Phone call click' LABEL - SECONDARY, measured not bid on
+  enhancedConversions: false,           // ⛔ see the submit handler before flipping this true
   ga4Id:     'G-0VLPDYM7LC',            // GA4 measurement ID
   metaPixel: 'XXXXXXXXXXXXXXX',         // Meta pixel / dataset ID
   endpoint:  'https://profound-truth-production-4190.up.railway.app/webhook/kdt/lp-lead'
@@ -92,6 +93,35 @@ window.KDT_TRACK = {
     });
     if (R.ga4) gtag('event', 'phone_click', { link_url: a.getAttribute('href') });
   }, true);
+
+  /* Enhanced Conversions payload builder. Hashes locally with SHA-256 so raw
+     contact details never leave the browser, which is stricter than gtag's
+     default (it would hash them for us, but only after we handed them over).
+     Google's normalisation rules: email lowercased and trimmed, phone in E.164.
+     Returns null on anything unexpected — a failed hash must never block the
+     conversion from firing, so the caller treats null as "send it plain". */
+  async function sha256Hex(v){
+    if (!v) return null;
+    try {
+      var buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(v));
+      return Array.from(new Uint8Array(buf)).map(function(b){
+        return b.toString(16).padStart(2,'0'); }).join('');
+    } catch (e) { return null; }
+  }
+  window.kdtUserData = async function(payload){
+    try {
+      var out = {};
+      var em = (payload.email || '').trim().toLowerCase();
+      if (em) { var h = await sha256Hex(em); if (h) out.sha256_email_address = h; }
+      var digits = String(payload.phone || '').replace(/\D/g, '');
+      if (digits.length === 10) digits = '1' + digits;      // NANP, KDT is BC only
+      if (digits.length === 11) {
+        var p = await sha256Hex('+' + digits);
+        if (p) out.sha256_phone_number = p;
+      }
+      return Object.keys(out).length ? out : null;
+    } catch (e) { return null; }
+  };
 })();
 </script>
 
@@ -523,7 +553,23 @@ footer{padding:30px 0 44px;color:var(--muted);font-size:14px;text-align:center;b
       /* Browser Lead with the SHARED event_id. Server fires CAPI Lead with the same id -> dedupes.
          The qualifier answers are what make this a Lead rather than a raw fill. */
       if(window.fbq) fbq('track','Lead',{},{eventID:eid});
-      if(window.gtag && window.KDT_READY.gads) gtag('event','conversion',{send_to:C.gadsId+'/'+C.gadsLabel, event_id:eid});
+      /* Enhanced Conversions. INERT until C.enhancedConversions is flipped true.
+         ⛔ Do NOT flip it until BOTH are done, in this order:
+            1. privacy.html discloses that hashed contact details go to Google
+               for conversion measurement (today it does not mention Google at all)
+            2. someone with authority accepts Google's customer data terms in the
+               Ads UI (accepted_customer_data_terms currently reads false)
+         Accepting those terms asserts KDT has the right to share this data. That
+         assertion needs step 1 to be true first. Sending hashed PII before then
+         would be doing it backwards. */
+      if(window.gtag && window.KDT_READY.gads && C.enhancedConversions){
+        kdtUserData(payload).then(function(ud){
+          if(ud) gtag('set','user_data',ud);
+          gtag('event','conversion',{send_to:C.gadsId+'/'+C.gadsLabel, event_id:eid});
+        });
+      } else if(window.gtag && window.KDT_READY.gads){
+        gtag('event','conversion',{send_to:C.gadsId+'/'+C.gadsLabel, event_id:eid});
+      }
       if(window.dataLayer) dataLayer.push({event:'lp_lead', event_id:eid, page:payload.page});
       done(true);
     }).catch(function(err){
