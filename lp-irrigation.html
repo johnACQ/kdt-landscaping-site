@@ -23,7 +23,20 @@ window.KDT_TRACK = {
                                         // TRUE (API read-back). Disclosed in privacy.html
                                         // in the SAME commit that set this true.
   ga4Id:     'G-0VLPDYM7LC',            // GA4 measurement ID
-  metaPixel: 'XXXXXXXXXXXXXXX',         // Meta pixel / dataset ID
+  metaPixel: null,                      // ⛔ INERT ON PURPOSE. KDT has no Business
+                                        // Manager, no ad account and no pixel yet
+                                        // (2026-08-14). null, not a placeholder
+                                        // string, so "not configured" is a fact
+                                        // rather than a string anyone can mistake
+                                        // for a real id. While this is null NOTHING
+                                        // Meta fires: no fbevents.js download, no
+                                        // fbq init, no PageView, no Lead. Zero
+                                        // external calls to Meta.
+                                        // ⛔ NEVER point this at Apex's own pixel -
+                                        // it would poison the acquisition dataset.
+                                        // To go live: put KDT's real pixel id here,
+                                        // set KDT_META_PIXEL_ID + KDT_META_CAPI_TOKEN
+                                        // in Railway, then /my-precheck kdt --tracking.
   endpoint:  'https://profound-truth-production-4190.up.railway.app/webhook/kdt/lp-lead'
 };
 (function(){
@@ -45,7 +58,7 @@ window.KDT_TRACK = {
   if (bad.length) {
     /* LOUD ON PURPOSE. A silent no-op base tag is the exact N1 failure that
        killed Spark's tracking for weeks. Never let this fail quietly. */
-    console.warn('[KDT] TRACKING PARTIALLY CONFIGURED - placeholders still present:', bad.join(', '),
+    console.warn('[KDT] TRACKING PARTIALLY CONFIGURED - not configured yet:', bad.join(', '),
                  '\nWhatever IS configured still fires. The form still submits and the lead is still captured.');
   }
   if (!R.endpoint) {
@@ -140,15 +153,31 @@ window.KDT_TRACK = {
 })(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
 </script>
 
-<!-- click-id capture: 90-day cookie, injected into the form at submit. try/catch - never block the page on tracking -->
+<!-- click-id capture: 90-day first-party cookies, read into the form payload at submit.
+     COOKIES ONLY - this block makes no network request of any kind, to Google or Meta.
+     try/catch - never block the page on tracking. -->
 <script>
 (function(){
   try{
     function setCookie(k,v){ document.cookie = k+'='+v+';path=/;max-age='+(90*86400)+';SameSite=Lax'; }
     function getParam(k){ return new URLSearchParams(location.search).get(k); }
     var g = getParam('gclid'); if(g) setCookie('_kdt_gclid', g);
+
+    /* Meta click id, stored TWICE on purpose:
+         _kdt_fbclid  the RAW fbclid, first-party, exactly the _kdt_gclid pattern. This
+                      is the one we own. A real Meta pixel, once one exists, will manage
+                      _fbc itself and can overwrite it; _kdt_fbclid survives that, so the
+                      server can always rebuild a correct fbc from it.
+         _fbc         the Meta-spec format fb.1.<ms>.<fbclid> that CAPI matches on. Meta
+                      normally writes this, but there is no pixel here yet, so writing it
+                      ourselves is the only way an ad click is still attributable on the
+                      day the pixel lands.
+       Both are set from the URL, client-side, with no pixel loaded. */
     var f = getParam('fbclid');
-    if(f) setCookie('_fbc', 'fb.1.' + Date.now() + '.' + f);
+    if(f){
+      setCookie('_kdt_fbclid', f);
+      setCookie('_fbc', 'fb.1.' + Date.now() + '.' + f);
+    }
   }catch(e){}
 })();
 </script>
@@ -525,9 +554,20 @@ footer{padding:30px 0 44px;color:var(--muted);font-size:14px;text-align:center;b
       town:document.getElementById('town').value,
       company:document.querySelector('input[name=company]').value,   // honeypot: server drops if non-empty
       gclid:cookie('_kdt_gclid'),
+      /* Meta attribution. fbclid is the raw click id we captured ourselves; fbp/fbc are
+         the Meta cookies (fbp only exists once a real pixel has run, so today it is
+         empty and that is correct, not a fault). All three are sent whether or not a
+         pixel exists - the server persists them so the day KDT has a pixel, historic
+         leads are still matchable and browser/server dedupe already works. */
+      fbclid:cookie('_kdt_fbclid'),
       fbp:cookie('_fbp'), fbc:cookie('_fbc'),
       event_id:eid,                                                  // shared -> browser + server CAPI dedupe
-      page:location.pathname.replace(/^\//,'').replace(/\.html$/,'')
+      /* On the root URL pathname is just "/", which stripped to "" and reached the
+         handler as page-unknown - so every lead that landed on go.kdtlandscape.ca/
+         (the root serves the backyard-build page and takes real leads) lost its page
+         attribution. The handler already has an "index" entry waiting for it. */
+      page:(location.pathname.replace(/^\//,'').replace(/\.html$/,'') || 'index'),
+      page_url:location.href                                         // CAPI event_source_url
     };
 
     var btn=this.querySelector('button[type=submit]');
