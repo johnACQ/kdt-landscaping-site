@@ -416,7 +416,13 @@ footer{padding:30px 0 44px;color:var(--muted);font-size:14px;text-align:center;b
         <input id="email" name="email" type="email" autocomplete="email" autocapitalize="off" autocorrect="off">
         <p class="hint">If you want the quote emailed as well as talked through.</p>
 
-        <p class="err" id="e2">We need all three so we can actually get back to you.</p>
+        <!-- Must match the validation two scripts down, which checks name and
+             phone ONLY (email is optional and labelled as such). This read "all
+             three" until 2026-08-17, so anyone who left the optional email blank
+             and tripped this error was told to fill in a field we never wanted.
+             It fires at the exact moment people abandon. If the required fields
+             ever change, change this line in the same edit. -->
+        <p class="err" id="e2">We need your name and phone so we can actually get back to you.</p>
         <button type="submit" class="btn">Book my site visit</button>
         <a class="back" id="back">&larr; Back</a>
       </div>
