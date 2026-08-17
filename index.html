@@ -526,7 +526,21 @@ footer{padding:30px 0 44px;color:var(--muted);font-size:14px;text-align:center;b
         w=document.getElementById('town').value;
     if(!r||!t||!w){e1.style.display='block';return;}
     e1.style.display='none';
-    // MEASUREMENT (non-optional): without this you cannot see step1 -> step2 drop-off.
+    /* MEASUREMENT (non-optional): without this you cannot see step1 -> step2 drop-off.
+       ⛔ dataLayer ALONE REACHES NOBODY. There is no GTM container on this site, only
+          gtag. The push below has therefore reported to precisely no one since launch.
+          That blind spot cost us the Aug 12-17 diagnosis: GA4 showed 14 form_start and
+          0 form_submit, and there was no way to tell whether people were dying on the
+          three qualifier dropdowns or on the contact fields. Never assume a dataLayer
+          push is measurement — it is only measurement if something is listening.
+       send_to is pinned to the GA4 id on purpose: an unpinned gtag('event') is sent to
+       every configured target including AW-, and we do not want step 1 anywhere near
+       the Ads conversion surface. Step 1 is a diagnostic, not a lead. */
+    if(window.gtag && window.KDT_READY && window.KDT_READY.ga4){
+      gtag('event','form_step_1',{
+        send_to:(window.KDT_TRACK||{}).ga4Id, reason:r, timeframe:t, town:w
+      });
+    }
     if(window.dataLayer) window.dataLayer.push({event:'form_step_1',reason:r,timeframe:t,town:w});
     if(window.fbq) fbq('trackCustom','FormStep1',{reason:r,timeframe:t,town:w});
     s1.style.display='none'; s2.style.display='block'; b2.classList.add('on');
