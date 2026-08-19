@@ -415,17 +415,18 @@ footer{padding:30px 0 44px;color:var(--muted);font-size:14px;text-align:center;b
         <label for="phone">Phone</label>
         <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required>
 
-        <label for="email">Email (optional)</label>
-        <input id="email" name="email" type="email" autocomplete="email" autocapitalize="off" autocorrect="off">
-        <p class="hint">If you want the quote emailed as well as talked through.</p>
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" autocomplete="email" autocapitalize="off" autocorrect="off" required>
+        <p class="hint">So we can send your quote in writing, not just talk it through.</p>
 
-        <!-- Must match the validation two scripts down, which checks name and
-             phone ONLY (email is optional and labelled as such). This read "all
-             three" until 2026-08-17, so anyone who left the optional email blank
-             and tripped this error was told to fill in a field we never wanted.
-             It fires at the exact moment people abandon. If the required fields
-             ever change, change this line in the same edit. -->
-        <p class="err" id="e2">We need your name and phone so we can actually get back to you.</p>
+        <!-- Must match the validation two scripts down, which checks name, phone
+             AND email. Email became required 2026-08-19: it was optional, and a
+             lead who skipped it got no speed-to-lead email at all, only a
+             callback. History worth keeping: this line read "all three" while
+             email was optional, so blank-email submitters were told to fill in a
+             field we never wanted. It fires at the exact moment people abandon.
+             If the required fields ever change, change this line in the same edit. -->
+        <p class="err" id="e2">We need your name, phone and email so we can actually get back to you.</p>
         <button type="submit" class="btn">Book my site visit</button>
         <a class="back" id="back">&larr; Back</a>
       </div>
@@ -566,7 +567,7 @@ footer{padding:30px 0 44px;color:var(--muted);font-size:14px;text-align:center;b
     var n=document.getElementById('name').value.trim(),
         p=document.getElementById('phone').value.trim(),
         m=document.getElementById('email').value.trim();
-    if(!n||!p){e2.style.display='block';return;}
+    if(!n||!p||!m){e2.style.display='block';return;}
     e2.style.display='none';
 
     var C=window.KDT_TRACK||{}, eid=eventId();
