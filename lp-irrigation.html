@@ -645,6 +645,25 @@ footer{padding:30px 0 44px;color:var(--muted);font-size:14px;text-align:center;b
       } else if(window.gtag && window.KDT_READY.gads){
         gtag('event','conversion',{send_to:C.gadsId+'/'+C.gadsLabel, event_id:eid});
       }
+      /* GA4 generate_lead. Added 2026-08-20 — it was MISSING, and its absence is
+         why KDT's GA4 could show 27 form_start / 10 form_step_1 and then simply
+         stop: the funnel had no terminal event, so "0 leads" and "we cannot see
+         leads" were indistinguishable. The dataLayer push below has the same
+         defect this file already documents for step 1 — there is no GTM
+         container on this site, only gtag, so it reaches precisely no one.
+         send_to is pinned to the GA4 id for the same reason as step 1: an
+         unpinned gtag('event') fans out to every configured target including
+         AW-, which would double-count the Ads conversion fired just above. */
+      if(window.gtag && window.KDT_READY && window.KDT_READY.ga4){
+        gtag('event','generate_lead',{
+          send_to:(window.KDT_TRACK||{}).ga4Id,
+          event_id:eid,
+          page:payload.page,
+          reason:payload.reason,
+          town:payload.town,
+          value:0, currency:'CAD'
+        });
+      }
       if(window.dataLayer) dataLayer.push({event:'lp_lead', event_id:eid, page:payload.page});
       done(true);
     }).catch(function(err){
