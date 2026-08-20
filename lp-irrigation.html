@@ -264,6 +264,7 @@ h1 .script{display:block;font-family:var(--script);font-style:italic;font-weight
 .bar i.on{background:var(--brand)}
 label{display:block;font-family:var(--display);font-weight:600;font-size:12px;letter-spacing:.14em;
   text-transform:uppercase;color:var(--ink);margin:16px 0 7px}
+.opt{font-weight:400;letter-spacing:0;text-transform:none;opacity:.55;}
 select,input{width:100%;background:#fff;border:1px solid #CFCAC2;color:var(--ink);border-radius:0;padding:14px 12px;font-size:16px;font-family:var(--body)}
 select:focus,input:focus{outline:2px solid var(--brand);outline-offset:1px;border-color:var(--brand)}
 .hint{color:var(--muted);font-size:13px;margin:6px 0 0}
@@ -365,7 +366,7 @@ footer{padding:30px 0 44px;color:var(--muted);font-size:14px;text-align:center;b
       <!-- STEP 1 — qualifiers only, NO contact fields -->
       <div id="step1">
         <h2>What do you need doing?</h2>
-        <p class="fine">Three quick questions, then we book a time to come look.</p>
+        <p class="fine">Two quick questions, then we book a time to come look.</p>
 
         <label for="reason">What are you looking to get done?</label>
         <select id="reason" name="reason" required>
@@ -378,8 +379,8 @@ footer{padding:30px 0 44px;color:var(--muted);font-size:14px;text-align:center;b
         </select>
 
         <label for="timeframe">How soon do you need it?</label>
-        <select id="timeframe" name="timeframe" required>
-          <option value="" disabled selected>Choose one</option>
+        <select id="timeframe" name="timeframe">
+          <option value="" selected>Not sure yet</option>
           <option>As soon as you can fit me in</option>
           <option>Within the next few months</option>
           <option>Later this season</option>
@@ -529,7 +530,14 @@ footer{padding:30px 0 44px;color:var(--muted);font-size:14px;text-align:center;b
     var r=document.getElementById('reason').value,
         t=document.getElementById('timeframe').value,
         w=document.getElementById('town').value;
-    if(!r||!t||!w){e1.style.display='block';return;}
+    /* timeframe is NOT gated here (2026-08-20). It was, and the HTML `required`
+       attribute was only half the lock — removing it alone changes nothing while
+       this line still blocks Continue on an empty value. Screen 1 asked for THREE
+       deliberate dropdown choices before a homeowner gave anything they came to
+       give, and 63% of form_starts died there (27 form_start -> 10 form_step_1,
+       0 submits, $452/wk). It is still SENT below when answered — we lose the
+       qualifier on some leads, not the measurement. */
+    if(!r||!w){e1.style.display='block';return;}
     e1.style.display='none';
     /* MEASUREMENT (non-optional): without this you cannot see step1 -> step2 drop-off.
        ⛔ dataLayer ALONE REACHES NOBODY. There is no GTM container on this site, only
