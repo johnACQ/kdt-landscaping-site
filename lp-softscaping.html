@@ -58,7 +58,7 @@ window.KDT_TRACK = {
   var bad = []; for (var k in C) if (!ok(C[k])) bad.push(k);
   if (bad.length) {
     /* LOUD ON PURPOSE. A silent no-op base tag is the exact N1 failure that
-       killed Spark's tracking for weeks. Never let this fail quietly. */
+       silently killed tracking on another build for weeks. Never let this fail quietly. */
     console.warn('[KDT] TRACKING PARTIALLY CONFIGURED - not configured yet:', bad.join(', '),
                  '\nWhatever IS configured still fires. The form still submits and the lead is still captured.');
   }
