@@ -25,20 +25,20 @@ window.KDT_TRACK = {
                                         // TRUE (API read-back). Disclosed in privacy.html
                                         // in the SAME commit that set this true.
   ga4Id:     'G-0VLPDYM7LC',            // GA4 measurement ID
-  metaPixel: null,                      // ⛔ INERT ON PURPOSE. KDT has no Business
-                                        // Manager, no ad account and no pixel yet
-                                        // (2026-08-14). null, not a placeholder
-                                        // string, so "not configured" is a fact
-                                        // rather than a string anyone can mistake
-                                        // for a real id. While this is null NOTHING
-                                        // Meta fires: no fbevents.js download, no
-                                        // fbq init, no PageView, no Lead. Zero
-                                        // external calls to Meta.
-                                        // ⛔ NEVER point this at Apex's own pixel -
+  metaPixel: '28317643844535128',       // KDT Landscaping Pixel, LIVE 2026-09-08.
+                                        // Dataset owned by the Apex ACQ business
+                                        // portfolio alongside ad account
+                                        // act_1079781261166205. Turning this from
+                                        // null to a real id is what switches Meta
+                                        // on: fbevents.js loads, fbq inits and
+                                        // PageView fires. The Lead event is NOT
+                                        // fired here on purpose - it goes server
+                                        // side via Railway CAPI so a qualified
+                                        // lead cannot be faked from a browser.
+                                        // Before this date the pixel had never
+                                        // fired once, browser or server.
+                                        // NEVER point this at Apex's own pixel -
                                         // it would poison the acquisition dataset.
-                                        // To go live: put KDT's real pixel id here,
-                                        // set KDT_META_PIXEL_ID + KDT_META_CAPI_TOKEN
-                                        // in Railway, then /my-precheck kdt --tracking.
   endpoint:  'https://profound-truth-production-4190.up.railway.app/webhook/kdt/lp-lead'
 };
 (function(){
