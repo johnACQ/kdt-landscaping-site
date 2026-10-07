@@ -183,13 +183,21 @@ window.KDT_TRACK = {
 })();
 </script>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;600;700&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="preload" href="assets/fonts/oswald-latin-var.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/sourcesans3-latin-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
 <link rel="apple-touch-icon" href="assets/favicon.png">
-<link rel="preload" as="image" href="assets/heroLandscape_87eacbed.jpeg">
+<link rel="preload" as="image" href="assets/heroLandscape_87eacbed-m.webp" media="(max-width:900px)" fetchpriority="high">
+<link rel="preload" as="image" href="assets/heroLandscape_87eacbed.webp" media="(min-width:901px)" fetchpriority="high">
 <style>
+/* Self-hosted fonts (2026-10-07): the Google Fonts stylesheet was render-blocking and its late
+   swap reflowed the hero and moved the form (CLS 0.241). Same faces, same weights, served from
+   this origin and preloaded. The *Fallback faces are size-matched so any swap barely moves text. */
+@font-face{font-family:"Oswald";font-style:normal;font-weight:200 700;font-display:swap;src:url(assets/fonts/oswald-latin-var.woff2) format("woff2");unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:"Oswald Fallback";src:local("Arial"),local("ArialMT"),local("Helvetica"),local("Liberation Sans"),local("Roboto");size-adjust:68.22%;ascent-override:174.87%;descent-override:42.36%;line-gap-override:0.00%}
+@font-face{font-family:"Source Sans 3";font-style:normal;font-weight:300 600;font-display:swap;src:url(assets/fonts/sourcesans3-latin-var.woff2) format("woff2");unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:"Source Sans 3 Fallback";src:local("Arial"),local("ArialMT"),local("Helvetica"),local("Liberation Sans"),local("Roboto");size-adjust:90.94%;ascent-override:112.60%;descent-override:43.98%;line-gap-override:0.00%}
+
 /* ============================================================
    KDT LANDSCAPING — design tokens sampled from the LIVE site
    kdtlandscape.ca, rendered via Playwright 2026-07-29.
@@ -209,8 +217,8 @@ window.KDT_TRACK = {
   --brand-hover:#0d5c33;
   --brand-light:#4C9A6A;   /* derived: legible green for ON-DARK accents only */
   --brand-ink:#FFFFFF;
-  --display:Oswald,"Arial Narrow",sans-serif;
-  --body:"Source Sans 3",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  --display:Oswald,"Oswald Fallback","Arial Narrow",sans-serif;
+  --body:"Source Sans 3","Source Sans 3 Fallback",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
   --script:"Cormorant Garamond",Georgia,serif;
 }
 *{box-sizing:border-box}
@@ -232,7 +240,8 @@ a{color:inherit}
 
 /* ---- hero: full-bleed photo + dark scrim, exactly their treatment ---- */
 .hero{position:relative;padding:70px 0 78px;
-  background:linear-gradient(rgba(10,14,17,.80),rgba(10,14,17,.66)),url('assets/heroLandscape_87eacbed.jpeg') center/cover no-repeat;}
+  background:linear-gradient(rgba(10,14,17,.80),rgba(10,14,17,.66)),url('assets/heroLandscape_87eacbed.webp') center/cover no-repeat;background-color:#0A0E11}
+.season{margin:-4px 0 20px;padding-left:12px;border-left:3px solid var(--brand-light);font-family:var(--display);font-weight:400;font-size:17px;line-height:1.3;letter-spacing:.14em;text-transform:uppercase;color:#fff}
 .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:44px;align-items:start}
 
 /* their eyebrow: rule + green letterspaced caps */
@@ -302,14 +311,16 @@ details[open] summary:after{content:"–"}
 details p{color:var(--muted);margin:12px 0 0}
 
 /* final CTA: dark photo band, mirrors their closing section */
-.final{text-align:center;background:linear-gradient(rgba(10,14,17,.86),rgba(10,14,17,.86)),url('assets/flagstone-patio-boulders_95b6c924.jpeg') center/cover no-repeat;border-top:0}
+.final{text-align:center;background:linear-gradient(rgba(10,14,17,.86),rgba(10,14,17,.86)),url('assets/flagstone-patio-boulders_95b6c924-bg.webp') center/cover no-repeat;border-top:0}
 .final h2.sec,.final p{color:#fff}
 .final .lede{color:rgba(255,255,255,.86);margin-left:auto;margin-right:auto}
 .final .btn{max-width:440px;margin:26px auto 0;display:block;text-decoration:none;line-height:1.2}
 footer{padding:30px 0 44px;color:var(--muted);font-size:14px;text-align:center;border-top:1px solid var(--line);background:var(--bg)}
 
 @media(max-width:900px){
-  .hero{padding:26px 0 40px}
+  .hero{padding:26px 0 40px;background-image:linear-gradient(rgba(10,14,17,.80),rgba(10,14,17,.66)),url('assets/heroLandscape_87eacbed-m.webp')}
+  .hero-grid .season{order:2}
+  .season{font-size:14px;letter-spacing:.12em;margin:-4px 0 14px}
   /* ⛔ LOCKED SPEC: form ABOVE the fold. On mobile the hero copy pushed it under,
      so the left column dissolves and the form is ordered directly after the H1.
      Sub-copy and trust chips drop below it. Do not reorder back. */
@@ -347,7 +358,7 @@ footer{padding:30px 0 44px;color:var(--muted);font-size:14px;text-align:center;b
 <div class="topband">
 <div class="wrap">
   <div class="topbar">
-    <span class="logo-chip"><img class="logo-img" src="assets/kdt-logo-white_knockout.png" alt="KDT Landscaping" width="821" height="1037"></span>
+    <span class="logo-chip"><img class="logo-img" src="assets/kdt-logo-white_knockout-h156.webp" alt="KDT Landscaping" width="124" height="157"></span>
     <a class="tel" href="tel:+12502587125">Call (250) 258-7125</a>
   </div>
 </div>
@@ -359,7 +370,8 @@ footer{padding:30px 0 44px;color:var(--muted);font-size:14px;text-align:center;b
     <div>
       <p class="eyebrow">Kelowna &amp; the Okanagan</p>
       <h1>That slope, that dead corner, that yard you never use. <em>It can be the best part of the house.</em></h1>
-      <p class="sub">We build retaining walls, paving stone patios and driveways, pool and spa surrounds, and full backyard transformations. Tell us what you are working with and we will come take a look.</p>
+      <p class="season">Plan it this winter. Build it in spring.</p>
+      <p class="sub">We build retaining walls, paving stone patios and driveways, pool and spa surrounds, and full backyard transformations. Tell us what you are working with and we will come take a look. Booking for next season? Get the site visit done before the snow. The quote comes in writing and you take as long as you need.</p>
       <ul class="trust">
         <li><b>5.0★</b> on 19 Google reviews</li>
         <li><b>Family run</b> since 1999</li>
@@ -479,9 +491,9 @@ footer{padding:30px 0 44px;color:var(--muted);font-size:14px;text-align:center;b
   <h2 class="sec">Work we have done around the Okanagan</h2>
   <p class="lede">Real properties, real crews, no stock photos.</p>
   <div class="gallery">
-    <img src="assets/retainingWallLit_0a510060.jpeg" alt="Retaining wall with integrated step lighting at dusk, KDT Landscaping Kelowna" loading="lazy" decoding="async" width="4032" height="3024">
-    <img src="assets/flagstone-patio-boulders_95b6c924.jpeg" alt="Flagstone patio with placed boulders and steel planter edging" loading="lazy" decoding="async" width="1000" height="1333">
-    <img src="assets/luxuryOutdoor_d55ffefc.jpeg" alt="Outdoor living space built by KDT Landscaping in the Okanagan" loading="lazy" decoding="async" width="1000" height="1333">
+    <img src="assets/retainingWallLit_0a510060-1000.webp" alt="Retaining wall with integrated step lighting at dusk, KDT Landscaping Kelowna" loading="lazy" decoding="async" width="1000" height="750">
+    <img src="assets/flagstone-patio-boulders_95b6c924-800.webp" alt="Flagstone patio with placed boulders and steel planter edging" loading="lazy" decoding="async" width="800" height="1066">
+    <img src="assets/luxuryOutdoor_d55ffefc-800.webp" alt="Outdoor living space built by KDT Landscaping in the Okanagan" loading="lazy" decoding="async" width="800" height="1066">
   </div>
   <!-- Build provenance: photos are KDT's own from kdtlandscape.ca, zoom-checked for
        third-party branding 2026-07-29 (only equipment-manufacturer marks). -->
