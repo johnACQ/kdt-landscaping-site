@@ -1,1 +1,86 @@
-[]
+[
+  {
+    "slug": "blog-plan-backyard-build-kelowna-winter",
+    "title": "Plan a Kelowna Backyard Build This Winter | KDT Landscaping",
+    "desc": "How a full backyard build works with KDT: a half-hour walk-through, a written quote, then build in spring. Family run in Kelowna since 1999.",
+    "date": "2026-10-19",
+    "card": {
+      "img": "assets/lakefrontBocce_88fa40f3.jpeg",
+      "w": 1000,
+      "h": 667,
+      "alt": "Lakefront backyard with a bocce court, putting green and paving stone patio, built by KDT Landscaping",
+      "title": "Your backyard for next summer gets decided this winter",
+      "excerpt": "The slow part of a backyard build is the deciding, not the digging. Here is how the walk-through, the written quote and a spring build work with KDT."
+    }
+  },
+  {
+    "slug": "blog-retaining-wall-kelowna-slope",
+    "title": "Why Retaining Walls Lean on Kelowna Slopes | KDT Landscaping",
+    "desc": "Water pushes retaining walls over, not weight. What base first, drainage first means for a wall on a Kelowna slope, and when an old wall can be saved.",
+    "date": "2026-10-26",
+    "card": {
+      "img": "assets/retainingWallLakefront_m3811.jpeg",
+      "w": 1000,
+      "h": 750,
+      "alt": "Charcoal block retaining wall with wide steps above a lake, built by KDT Landscaping",
+      "title": "Why retaining walls lean on Kelowna slopes",
+      "excerpt": "A leaning wall is short on base and drainage, not block. Here is what base first, drainage first means for yours."
+    }
+  },
+  {
+    "slug": "blog-paving-stone-patio-kelowna",
+    "title": "Paving Stone Patios That Stay Flat in Kelowna | KDT Landscaping",
+    "desc": "Sunken corners and weeds in the joints are almost always a base problem. How a paving stone patio or driveway stays flat, and when yours can be saved.",
+    "date": "2026-11-02",
+    "card": {
+      "img": "assets/heroLandscape_87eacbed.jpeg",
+      "w": 1000,
+      "h": 999,
+      "alt": "Paving stone patio and seating area beside a backyard putting green and block walls, built by KDT Landscaping",
+      "title": "Your patio sank. Odds are the stones are not to blame.",
+      "excerpt": "Settling, lipping and weeds through the joints almost always come from the base. Here is what goes under a patio that stays flat."
+    }
+  },
+  {
+    "slug": "blog-pool-spa-surround-kelowna",
+    "title": "Pool and Hot Tub Surrounds in Kelowna | KDT Landscaping",
+    "desc": "What makes a pool or hot tub surround last on a Kelowna lot: a packed base, water sent the right way, flat ground and lit steps. Book a site visit.",
+    "date": "2026-11-09",
+    "card": {
+      "img": "assets/outdoorLiving_3bfd1ebb.jpeg",
+      "w": 1000,
+      "h": 1777,
+      "alt": "Paving stone patio beside a hot tub, with lake and mountain views, built by KDT Landscaping",
+      "title": "Your pool gets the attention. The surround takes the beating.",
+      "excerpt": "Stones that sink near the edge and water that sits where you walk are base problems. Here is what makes a surround last."
+    }
+  },
+  {
+    "slug": "blog-artificial-turf-vs-sod-kelowna",
+    "title": "Artificial Turf or Sod for Your Kelowna Yard? | KDT Landscaping",
+    "desc": "Artificial turf or real sod? How to tell which suits your Kelowna yard: sun, shade, slope, water and weekends. From a crew that installs both.",
+    "date": "2026-11-16",
+    "card": {
+      "img": "assets/luxuryOutdoor_d55ffefc.jpeg",
+      "w": 1000,
+      "h": 1333,
+      "alt": "Artificial turf and a small putting green beside a large format tile patio, built by KDT Landscaping",
+      "title": "Your yard might be wrong for turf. Here is how to tell.",
+      "excerpt": "KDT lays sod and installs artificial turf, so nobody is pushing you one way. Here is how sun, slope, water and your weekends decide it."
+    }
+  },
+  {
+    "slug": "blog-landscape-lighting-kelowna",
+    "title": "Built-In Landscape Lighting in Kelowna | KDT Landscaping",
+    "desc": "Hardwired low voltage lighting built into your walls, steps and patio, not solar stakes that quit. How to plan landscape lighting in Kelowna.",
+    "date": "2026-11-23",
+    "card": {
+      "img": "assets/lighting_deckPatio_2524509c.jpeg",
+      "w": 1000,
+      "h": 750,
+      "alt": "Step and wall lights glowing at dusk around a cedar deck, built by KDT Landscaping",
+      "title": "Your solar path lights died again, didn't they?",
+      "excerpt": "Box store path lights quit by the second summer. Hardwired low voltage lighting goes in with the landscape, so it looks like it grew there."
+    }
+  }
+]
