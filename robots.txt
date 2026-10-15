@@ -1,4 +1,8 @@
 User-agent: *
 Allow: /
+# _blog/ holds posts staged for future Mondays (this site is .nojekyll, so it
+# is served). Live posts are rendered to the site root by the weekly build.
+Disallow: /_blog/
+Disallow: /.github/
 
 Sitemap: https://go.kdtlandscape.ca/sitemap.xml
