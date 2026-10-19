@@ -55,4 +55,16 @@
     <lastmod>2026-10-07</lastmod>
     <priority>0.8</priority>
   </url>
+  <!-- apex:blog:start -->
+  <url>
+    <loc>https://go.kdtlandscape.ca/blog.html</loc>
+    <lastmod>2026-10-19</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://go.kdtlandscape.ca/blog-plan-backyard-build-kelowna-winter.html</loc>
+    <lastmod>2026-10-19</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <!-- apex:blog:end -->
 </urlset>

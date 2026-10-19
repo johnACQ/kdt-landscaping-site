@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Plan a Kelowna Backyard Build This Winter | KDT Landscaping</title>
+<link rel="canonical" href="https://go.kdtlandscape.ca/blog-plan-backyard-build-kelowna-winter.html">
+<meta name="robots" content="index,follow">
+<meta name="description" content="How a full backyard build works with KDT: a half-hour walk-through, a written quote, then build in spring. Family run in Kelowna since 1999.">
+<script>
+/* ============================================================
+   KDT TRACKING CONFIG  —  3 of 4 LIVE as of 2026-07-31
+   GA4 + Google Ads (tag verified firing) + Railway endpoint
+   (E2E-tested: lead -> GHL contact -> Speed to Lead email).
+   metaPixel is the only placeholder left — never point it at
+   Apex's own pixel. When it lands: /my-precheck kdt --tracking
+   ============================================================ */
+window.KDT_TRACK = {
+  gadsId:    'AW-18360980753',          // Google Ads conversion tag (KDT 940-595-3731)
+  gadsLabel: 'RChkCJ_76tkcEJGqmbNE',    // 'Submit lead form' conversion LABEL - send_to needs BOTH
+  phoneLabel:'K__6CN_W7N8cEJGqmbNE',    // 'Phone call click' LABEL - SECONDARY, measured not bid on
+  enhancedConversions: true,            // ON 2026-08-11. Google side: customer data terms
+                                        // ACCEPTED + enhanced_conversions_for_leads_enabled
+                                        // TRUE (API read-back). Disclosed in privacy.html
+                                        // in the SAME commit that set this true.
+  ga4Id:     'G-0VLPDYM7LC',            // GA4 measurement ID
+  metaPixel: '28317643844535128',       // KDT Landscaping Pixel, LIVE 2026-09-08.
+                                        // Dataset owned by the Apex ACQ business
+                                        // portfolio alongside ad account
+                                        // act_1079781261166205. Turning this from
+                                        // null to a real id is what switches Meta
+                                        // on: fbevents.js loads, fbq inits and
+                                        // PageView fires. The Lead event is NOT
+                                        // fired here on purpose - it goes server
+                                        // side via Railway CAPI so a qualified
+                                        // lead cannot be faked from a browser.
+                                        // Before this date the pixel had never
+                                        // fired once, browser or server.
+                                        // NEVER point this at Apex's own pixel -
+                                        // it would poison the acquisition dataset.
+  endpoint:  'https://profound-truth-production-4190.up.railway.app/webhook/kdt/lp-lead'
+};
+(function(){
+  var C = window.KDT_TRACK;
+  function ok(v){ return !!v && String(v).indexOf('XXXX') === -1; }
+  /* PER-VENDOR readiness. A missing Meta pixel must not switch off GA4, and
+     NOTHING in here may switch off the lead POST - see the submit handler. */
+  var R = window.KDT_READY = {
+    /* gads needs BOTH id and label: a conversion with no label is accepted
+       silently by gtag and recorded by nobody. */
+    gads: ok(C.gadsId) && ok(C.gadsLabel), ga4: ok(C.ga4Id),
+    meta: ok(C.metaPixel), endpoint: ok(C.endpoint)
+  };
+  /* deliberately still a BOOLEAN meaning "everything configured", so that any
+     reference we missed stays conservative instead of silently passing on a
+     truthy object. */
+  window.KDT_TRACK_READY = R.gads && R.ga4 && R.meta && R.endpoint;
+  var bad = []; for (var k in C) if (!ok(C[k])) bad.push(k);
+  if (bad.length) {
+    /* LOUD ON PURPOSE. A silent no-op base tag is the exact failure mode that
+       silently killed tracking on another build for weeks. Never let this fail quietly. */
+    console.warn('[KDT] TRACKING PARTIALLY CONFIGURED - not configured yet:', bad.join(', '),
+                 '\nWhatever IS configured still fires. The form still submits and the lead is still captured.');
+  }
+  if (!R.endpoint) {
+    console.error('[KDT] NO LEAD ENDPOINT - the form cannot capture leads. This is the only fatal one.');
+  }
+})();
+</script>
+
+<script>
+(function(){
+  var C = window.KDT_TRACK, R = window.KDT_READY;
+  if (!R.ga4 && !R.gads) return;                   // nothing real to load
+  var loadId = R.ga4 ? C.ga4Id : C.gadsId;         // loader needs one real id
+  var s = document.createElement('script'); s.async = true;
+  s.src = 'https://www.googletagmanager.com/gtag/js?id=' + loadId;
+  document.head.appendChild(s);
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = function(){ dataLayer.push(arguments); };
+  gtag('js', new Date());
+  if (R.gads) gtag('config', C.gadsId);            // base + config only
+  if (R.ga4)  gtag('config', C.ga4Id);
+
+  /* PHONE-CLICK CONVERSION.
+     A tap on the header number is a lead for this trade, and without this it
+     produced no signal at all - Google would optimise on form fills only and
+     the reporting would understate the account.
+
+     ⛔ DELEGATED, CAPTURE PHASE, and matched with closest(). Do NOT rewrite as
+        document.querySelectorAll('a[href^="tel:"]').forEach(...)
+     That binds once at parse time, so it silently misses any tel: link that is
+     added, re-rendered or revealed later. That exact pattern is a bug on an earlier build
+     that went 23 days recording nothing.
+
+     Fires the SECONDARY 'Phone call click' action, deliberately not the lead
+     action - a tap is not a booked job, and it must not compete with a real
+     form fill for the bidding signal. */
+  document.addEventListener('click', function(e){
+    var a = e.target && e.target.closest && e.target.closest('a[href^="tel:"]');
+    if (!a) return;
+    if (!(window.gtag && R.gads && C.phoneLabel &&
+          String(C.phoneLabel).indexOf('XXXX') === -1)) return;
+    if (a.__kdtFired) return;                       // one per element per page view
+    a.__kdtFired = true;
+    gtag('event', 'conversion', {
+      send_to: C.gadsId + '/' + C.phoneLabel,
+      event_id: 'kdt-tel-' + Date.now()
+    });
+    if (R.ga4) gtag('event', 'phone_click', { link_url: a.getAttribute('href') });
+  }, true);
+
+  /* Enhanced Conversions payload builder. Hashes locally with SHA-256 so raw
+     contact details never leave the browser, which is stricter than gtag's
+     default (it would hash them for us, but only after we handed them over).
+     Google's normalisation rules: email lowercased and trimmed, phone in E.164.
+     Returns null on anything unexpected — a failed hash must never block the
+     conversion from firing, so the caller treats null as "send it plain". */
+  async function sha256Hex(v){
+    if (!v) return null;
+    try {
+      var buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(v));
+      return Array.from(new Uint8Array(buf)).map(function(b){
+        return b.toString(16).padStart(2,'0'); }).join('');
+    } catch (e) { return null; }
+  }
+  window.kdtUserData = async function(payload){
+    try {
+      var out = {};
+      var em = (payload.email || '').trim().toLowerCase();
+      if (em) { var h = await sha256Hex(em); if (h) out.sha256_email_address = h; }
+      var digits = String(payload.phone || '').replace(/\D/g, '');
+      if (digits.length === 10) digits = '1' + digits;      // NANP, KDT is BC only
+      if (digits.length === 11) {
+        var p = await sha256Hex('+' + digits);
+        if (p) out.sha256_phone_number = p;
+      }
+      return Object.keys(out).length ? out : null;
+    } catch (e) { return null; }
+  };
+})();
+</script>
+
+<script>
+(function(f,b,e,v,n,t,s){
+  if(!window.KDT_READY.meta) return;
+  if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];
+  t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s);
+  fbq('init', window.KDT_TRACK.metaPixel);
+  fbq('track','PageView');
+})(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+</script>
+
+<script>
+(function(){
+  try{
+    function setCookie(k,v){ document.cookie = k+'='+v+';path=/;max-age='+(90*86400)+';SameSite=Lax'; }
+    function getParam(k){ return new URLSearchParams(location.search).get(k); }
+    var g = getParam('gclid'); if(g) setCookie('_kdt_gclid', g);
+
+    /* Meta click id, stored TWICE on purpose:
+         _kdt_fbclid  the RAW fbclid, first-party, exactly the _kdt_gclid pattern. This
+                      is the one we own. A real Meta pixel, once one exists, will manage
+                      _fbc itself and can overwrite it; _kdt_fbclid survives that, so the
+                      server can always rebuild a correct fbc from it.
+         _fbc         the Meta-spec format fb.1.<ms>.<fbclid> that CAPI matches on. Meta
+                      normally writes this, but there is no pixel here yet, so writing it
+                      ourselves is the only way an ad click is still attributable on the
+                      day the pixel lands.
+       Both are set from the URL, client-side, with no pixel loaded. */
+    var f = getParam('fbclid');
+    if(f){
+      setCookie('_kdt_fbclid', f);
+      setCookie('_fbc', 'fb.1.' + Date.now() + '.' + f);
+    }
+  }catch(e){}
+})();
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;600;700&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="apple-touch-icon" href="assets/favicon.png">
+<style>
+/* ============================================================
+   KDT LANDSCAPING — design tokens sampled from the LIVE site
+   kdtlandscape.ca, rendered via Playwright 2026-07-29.
+   ⚠️ Supersedes the #45c65a / #6fc967 logo-sampled greens: the
+   live 2026 site is DEEP FOREST #0A4627. Do not revert.
+   Structure below is the locked Brandon LP format — skin changed,
+   conversion layout deliberately NOT changed.
+   ============================================================ */
+:root{
+  --bg:#F9F8F6;            /* warm off-white, their light sections */
+  --panel:#FFFFFF;
+  --panel-alt:#F0EEEB;
+  --line:#E2DFDA;
+  --ink:#0A0E11;           /* their heading ink */
+  --muted:#5A5F66;
+  --brand:#0A4627;         /* deep forest — buttons, scrims, accents */
+  --brand-hover:#0d5c33;
+  --brand-light:#4C9A6A;   /* derived: legible green for ON-DARK accents only */
+  --brand-ink:#FFFFFF;
+  --display:Oswald,"Arial Narrow",sans-serif;
+  --body:"Source Sans 3",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  --script:"Cormorant Garamond",Georgia,serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.6 var(--body)}
+.wrap{max-width:1180px;margin:0 auto;padding:0 22px}
+a{color:inherit}
+
+/* ---- top utility bar: mirrors their black strip ---- */
+.topband{background:var(--ink);color:#fff}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+/* Logo sits DIRECTLY on the dark band. The source PNG was black ink on an
+   opaque white background, which is why this used to need a white chip and
+   read as a sticker. assets/kdt-logo-white_knockout.png is a luminance-to-alpha
+   knockout of the same mark, recoloured white, so no chip is needed. */
+.logo-chip{display:inline-flex;align-items:center}
+.logo-img{height:52px;width:auto;display:block}
+.tel{display:inline-block;background:var(--brand);color:#fff;font-family:var(--display);font-weight:600;font-size:13px;letter-spacing:.16em;text-transform:uppercase;padding:13px 22px;border-radius:0;text-decoration:none}
+.tel:hover{background:var(--brand-hover)}
+
+/* ---- hero: full-bleed photo + dark scrim, exactly their treatment ---- */
+.hero{position:relative;padding:70px 0 78px;
+  background:linear-gradient(rgba(10,14,17,.80),rgba(10,14,17,.66)),url('assets/heroLandscape_87eacbed.jpeg') center/cover no-repeat;}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:44px;align-items:start}
+
+/* their eyebrow: rule + green letterspaced caps */
+.eyebrow{display:flex;align-items:center;gap:14px;color:var(--brand-light);font-family:var(--display);font-weight:400;
+  text-transform:uppercase;letter-spacing:.26em;font-size:12px;margin:0 0 20px}
+.eyebrow:before{content:"";width:56px;height:1px;background:var(--brand-light);flex:none}
+
+/* their hero type: Oswald 200, huge, very wide tracking, last line green */
+h1{font-family:var(--display);font-size:44px;line-height:1.12;margin:0 0 18px;font-weight:300;
+  letter-spacing:.045em;text-transform:uppercase;color:#fff;max-width:19ch}
+h1 em{font-style:normal;color:var(--brand-light)}
+h1 .script{display:block;font-family:var(--script);font-style:italic;font-weight:500;font-size:36px;
+  letter-spacing:.02em;text-transform:none;color:var(--brand-light);margin-bottom:2px}
+.sub{color:rgba(255,255,255,.90);font-size:20px;font-weight:300;line-height:1.62;margin:0 0 26px;max-width:52ch}
+
+/* trust strip: their "25+ YEARS / FAMILY OWNED" rhythm, squared not pilled */
+.trust{display:flex;flex-wrap:wrap;gap:10px;padding:0;margin:0;list-style:none}
+.trust li{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.20);border-radius:0;
+  padding:10px 16px;font-size:13px;color:rgba(255,255,255,.86);font-family:var(--display);
+  font-weight:300;letter-spacing:.10em;text-transform:uppercase}
+.trust b{color:#fff;font-weight:600}
+
+/* ---- FORM CARD: class name is a tracking contract, do not rename ---- */
+.form-card{background:var(--panel);border:1px solid var(--line);border-radius:0;padding:26px;box-shadow:0 18px 50px rgba(10,14,17,.28)}
+.form-card h2{margin:0 0 6px;font-family:var(--display);font-size:23px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--ink)}
+.form-card .fine{color:var(--muted);font-size:15px;margin:0 0 18px}
+.bar{display:flex;gap:6px;margin-bottom:20px}
+.bar i{flex:1;height:3px;border-radius:0;background:var(--line)}
+.bar i.on{background:var(--brand)}
+label{display:block;font-family:var(--display);font-weight:600;font-size:12px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink);margin:16px 0 7px}
+select,input{width:100%;background:#fff;border:1px solid #CFCAC2;color:var(--ink);border-radius:0;padding:14px 12px;font-size:16px;font-family:var(--body)}
+select:focus,input:focus{outline:2px solid var(--brand);outline-offset:1px;border-color:var(--brand)}
+.hint{color:var(--muted);font-size:13px;margin:6px 0 0}
+.btn{width:100%;margin-top:20px;background:var(--brand);color:#fff;border:0;border-radius:0;padding:17px;
+  font-family:var(--display);font-size:15px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;cursor:pointer}
+.btn:hover{background:var(--brand-hover)}
+.back{display:inline-block;margin-top:12px;color:var(--muted);font-size:14px;text-decoration:none;cursor:pointer}
+.err{color:#B3261E;font-size:13px;margin-top:6px;display:none}
+.hp{position:absolute;left:-9999px;opacity:0;height:0;width:0}
+
+/* ---- light sections, their warm palette ---- */
+section{padding:66px 0;border-top:1px solid var(--line)}
+section:nth-of-type(even):not(.final){background:var(--panel-alt)}
+h2.sec{font-family:var(--display);font-size:42px;font-weight:700;text-transform:uppercase;letter-spacing:.03em;margin:0 0 10px;color:var(--ink)}
+.lede{color:var(--muted);margin:0 0 30px;max-width:62ch;font-size:18px}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:0;padding:22px}
+.card h3{margin:0 0 8px;font-family:var(--display);font-size:17px;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+.card p{margin:0;color:var(--muted);font-size:16px}
+.callout{background:rgba(10,70,39,.06);border-left:3px solid var(--brand);border-radius:0;padding:22px;margin-top:22px}
+.callout p{margin:0;font-size:18px}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;counter-reset:s}
+.step{background:var(--panel);border:1px solid var(--line);border-radius:0;padding:24px}
+.step:before{counter-increment:s;content:counter(s);display:flex;align-items:center;justify-content:center;
+  width:38px;height:38px;border-radius:0;background:var(--brand);color:#fff;font-family:var(--display);font-weight:600;margin-bottom:14px}
+.step h3{font-family:var(--display);text-transform:uppercase;letter-spacing:.06em}
+.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.gallery img{width:100%;height:240px;object-fit:cover;border-radius:0;border:1px solid var(--line);display:block}
+.cap{color:var(--muted);font-size:13px;margin-top:8px}
+details{background:var(--panel);border:1px solid var(--line);border-radius:0;padding:17px 19px;margin-bottom:10px}
+details summary{cursor:pointer;font-family:var(--display);font-weight:600;font-size:16px;text-transform:uppercase;letter-spacing:.04em;list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary:after{content:"+";float:right;color:var(--brand);font-weight:700}
+details[open] summary:after{content:"–"}
+details p{color:var(--muted);margin:12px 0 0}
+
+/* final CTA: dark photo band, mirrors their closing section */
+.final{text-align:center;background:linear-gradient(rgba(10,14,17,.86),rgba(10,14,17,.86)),url('assets/flagstone-patio-boulders_95b6c924.jpeg') center/cover no-repeat;border-top:0}
+.final h2.sec,.final p{color:#fff}
+.final .lede{color:rgba(255,255,255,.86);margin-left:auto;margin-right:auto}
+.final .btn{max-width:440px;margin:26px auto 0;display:block;text-decoration:none;line-height:1.2}
+footer{padding:30px 0 44px;color:var(--muted);font-size:14px;text-align:center;border-top:1px solid var(--line);background:var(--bg)}
+
+@media(max-width:900px){
+  .hero{padding:26px 0 40px}
+  /* ⛔ LOCKED SPEC: form ABOVE the fold. On mobile the hero copy pushed it under,
+     so the left column dissolves and the form is ordered directly after the H1.
+     Sub-copy and trust chips drop below it. Do not reorder back. */
+  .hero-grid{grid-template-columns:1fr;gap:0}
+  .hero-grid > div:first-child{display:contents}
+  .hero-grid .eyebrow{order:1}
+  .hero-grid h1{order:2}
+  .hero-grid .form-card{order:3;margin:4px 0 22px}
+  .hero-grid .sub{order:4}
+  .hero-grid .trust{order:5}
+  h1{font-size:27px;letter-spacing:.02em;max-width:none;margin:0 0 16px}
+  .eyebrow{margin:0 0 12px;font-size:11px;letter-spacing:.20em}
+  .eyebrow:before{width:28px}
+  .sub{font-size:17px;margin:0 0 18px}
+  h1 .script{font-size:26px}
+  .sub{font-size:18px}
+  h2.sec{font-size:30px}
+  .cols,.steps,.gallery{grid-template-columns:1fr}
+  .gallery img{height:210px}
+}
+</style>
+<style>
+/* blog posts + index (generated by _blog/build_blog.py) */
+.post{padding:44px 0 34px;background:var(--bg)}
+.post .wrap{max-width:780px}
+.post .eyebrow{color:var(--brand)}
+.post .eyebrow:before{background:var(--brand)}
+.post h1{color:var(--ink);max-width:none;font-size:38px;font-weight:400}
+.post h2{font-family:var(--display);font-weight:500;text-transform:uppercase;letter-spacing:.04em;font-size:24px;margin:34px 0 10px;color:var(--ink)}
+.post p,.post li{color:#2b3036;font-size:18px}
+.post figure{margin:22px 0 26px}
+.post figure img{width:100%;height:auto;display:block}
+.post a{color:var(--brand);font-weight:600}
+.post details{border-top:1px solid var(--line);padding:14px 0}
+.post details summary{cursor:pointer;font-weight:600}
+.post .cta{background:var(--panel-alt);border-left:4px solid var(--brand);padding:18px 20px;margin-top:30px}
+.post .back{font-family:var(--display);text-transform:uppercase;letter-spacing:.14em;font-size:12px}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:26px}
+.card{background:var(--panel);border:1px solid var(--line)}
+.card img{width:100%;height:220px;object-fit:cover;display:block}
+.card .in{padding:18px 20px 20px}
+.card h2{font-size:21px;margin:0 0 8px}
+.card p{font-size:16px;margin:0 0 12px}
+@media(max-width:900px){.post h1{font-size:28px}.cards{grid-template-columns:1fr}}
+</style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": ["LocalBusiness", "HomeAndConstructionBusiness"], "@id": "https://go.kdtlandscape.ca/#business", "name": "KDT Landscaping LTD", "url": "https://kdtlandscape.ca/", "telephone": "+1-250-258-7125", "image": "https://go.kdtlandscape.ca/assets/heroLandscape_87eacbed.jpeg", "foundingDate": "1999", "address": {"@type": "PostalAddress", "addressLocality": "Kelowna", "addressRegion": "BC", "addressCountry": "CA"}, "areaServed": [{"@type": "City", "name": "Kelowna"}, {"@type": "City", "name": "West Kelowna"}, {"@type": "City", "name": "Lake Country"}, {"@type": "City", "name": "Peachland"}, {"@type": "City", "name": "Summerland"}, {"@type": "City", "name": "Penticton"}], "sameAs": ["https://maps.google.com/maps?cid=12339973177873146885"]}, {"@type": "BlogPosting", "@id": "https://go.kdtlandscape.ca/blog-plan-backyard-build-kelowna-winter.html#article", "headline": "Your backyard for next summer gets decided this winter", "description": "How a full backyard build works with KDT: a half-hour walk-through, a written quote, then build in spring. Family run in Kelowna since 1999.", "datePublished": "2026-10-19", "dateModified": "2026-10-19", "author": {"@id": "https://go.kdtlandscape.ca/#business"}, "publisher": {"@id": "https://go.kdtlandscape.ca/#business"}, "mainEntityOfPage": {"@id": "https://go.kdtlandscape.ca/blog-plan-backyard-build-kelowna-winter.html"}, "inLanguage": "en-CA", "image": "https://go.kdtlandscape.ca/assets/lakefrontBocce_88fa40f3.jpeg"}, {"@type": "BreadcrumbList", "@id": "https://go.kdtlandscape.ca/blog-plan-backyard-build-kelowna-winter.html#breadcrumb", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://go.kdtlandscape.ca/"}, {"@type": "ListItem", "position": 2, "name": "Landscaping guides", "item": "https://go.kdtlandscape.ca/blog.html"}, {"@type": "ListItem", "position": 3, "name": "Your backyard for next summer gets decided this winter", "item": "https://go.kdtlandscape.ca/blog-plan-backyard-build-kelowna-winter.html"}]}, {"@type": "FAQPage", "@id": "https://go.kdtlandscape.ca/blog-plan-backyard-build-kelowna-winter.html#faq", "mainEntity": [{"@type": "Question", "name": "Does it cost anything to have you come out?", "acceptedAnswer": {"@type": "Answer", "text": "No. Mike or Tyson walks the property with you, talks through what is possible on your grade, and you get a written quote. No pressure either way."}}, {"@type": "Question", "name": "Is it too early to book a spring build?", "acceptedAnswer": {"@type": "Answer", "text": "No. Pick \"Booking for next season\" on the form. Get the site visit done before the snow and you have the quote in writing all winter."}}, {"@type": "Question", "name": "Which towns do you work in?", "acceptedAnswer": {"@type": "Answer", "text": "Kelowna, West Kelowna, Lake Country, Peachland, Summerland and Penticton."}}]}]}</script>
+
+<script type="text/javascript">
+  (function(c,l,a,r,i,t,y){
+    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+  })(window, document, "clarity", "script", "yfo4b11wfu");
+</script>
+</head>
+<body>
+
+
+<div class="topband">
+<div class="wrap">
+  <div class="topbar">
+    <span class="logo-chip"><img class="logo-img" src="assets/kdt-logo-white_knockout.png" alt="KDT Landscaping" width="821" height="1037"></span>
+    <a class="tel" href="tel:+12502587125">Call (250) 258-7125</a>
+  </div>
+</div>
+</div>
+
+
+<main class="post"><div class="wrap">
+<p class="back"><a href="blog.html">&larr; Landscaping guides</a></p>
+<p class="eyebrow">Backyard builds · Kelowna</p>
+<h1>Your backyard for next summer gets decided this winter</h1>
+<figure><img src="assets/lakefrontBocce_88fa40f3.jpeg" width="1000" height="667" alt="Lakefront backyard with a bocce court, putting green and paving stone patio, built by KDT Landscaping" loading="lazy"></figure>
+<p>You want a backyard you actually use by next summer. That starts now, before the snow. Not the digging. The deciding: what goes where, what your grade can hold, and what it will cost.</p>
+<p>If you have had "many issues with other landscaping companies", you are not the only one. Matthew S. wrote those exact words in his review of KDT, then called working with KDT "a breath of fresh air". Here is how a full backyard build works, before anyone picks up a shovel.</p>
+<h2>Plan it this winter. Build it in spring.</h2>
+<p>Design and quoting happen over the cooler months, and the calendar fills from spring. Get your walk-through and your written quote done now, and spring is for building your yard, not chasing quotes.</p>
+<h2>Step 1: You tell KDT what you are working with</h2>
+<p>Fill in the form or call. It takes a couple of minutes. Tyson calls you back, usually the same day, and books a time to come and look.</p>
+<h2>Step 2: Mike or Tyson walks your yard</h2>
+<p>The visit takes about half an hour, longer for a full backyard. There is no charge to come and look. You walk the property together and talk through what is possible on your grade and your budget. If something needs sorting before the nice part goes in, like runoff heading at your house or a wall that has started to lean, you hear it straight, and why.</p>
+<h2>Step 3: You get it in writing</h2>
+<p>You get a written quote with the scope laid out. No pressure to sign anything on the day. Take it inside, talk it over at the kitchen table, and take as long as you need.</p>
+<h2>Step 4: Spring is for building</h2>
+<p>The people quoting your job are the people building it. Your yard does not stay torn up a day longer than it needs to be, because Mike and Tyson run a tight crew that moves quicker than most.</p>
+<h2>What a full backyard can include</h2>
+<ul>
+<li>Retaining walls that turn a slope into flat ground you can use.</li>
+<li>Paving stone patios and driveways.</li>
+<li>Pool and spa surrounds.</li>
+<li>Artificial turf and putting greens.</li>
+<li>Irrigation and landscape lighting.</li>
+</ul>
+<p>Planned as one space, your backyard earns its keep from May to October. Planned one piece at a time, you end up with grass, a barbecue and nowhere anyone wants to sit. You can see the rest of what KDT builds on the <a href="kelowna-landscaping.html">Kelowna landscaping page</a>.</p>
+<h2>Who this is for, and who it is not</h2>
+<p>KDT is not the cheapest. If you want the lowest number, someone will beat it. It is also not the call for a mow-and-blow or a quick tidy before you list the house. For that job a cheaper crew is the right pick, and you would be paying for structure you do not need. If you want walls, a patio or a full backyard built once, that is the work. You get Mike, who started KDT in Kelowna in 1999, and his son Tyson, on site and not just on the invoice. You also get a company that carries $5,000,000 in commercial general liability insurance.</p>
+<details><summary>Does it cost anything to have you come out?</summary><p>No. Mike or Tyson walks the property with you, talks through what is possible on your grade, and you get a written quote. No pressure either way.</p></details>
+<details><summary>Is it too early to book a spring build?</summary><p>No. Pick "Booking for next season" on the form. Get the site visit done before the snow and you have the quote in writing all winter.</p></details>
+<details><summary>Which towns do you work in?</summary><p>Kelowna, West Kelowna, Lake Country, Peachland, Summerland and Penticton.</p></details>
+<p class="cta">Get your yard walked before the snow. <a href="kelowna-landscaping.html">Book your site visit here</a>, or call KDT at <a href="tel:+12502587125">(250) 258-7125</a>.</p>
+</div></main>
+<footer>
+  <div class="wrap">
+    KDT Landscaping Ltd. &middot; Kelowna, BC &middot; (250) 258-7125<br>
+    Serving Kelowna, West Kelowna, Lake Country, Peachland, Summerland &amp; Penticton<br>
+    $5,000,000 commercial general liability insurance
+  </div>
+</footer>
+</body>
+</html>
