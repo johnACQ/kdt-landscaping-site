@@ -58,8 +58,13 @@
   <!-- apex:blog:start -->
   <url>
     <loc>https://go.kdtlandscape.ca/blog.html</loc>
-    <lastmod>2026-10-26</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://go.kdtlandscape.ca/blog-paving-stone-patio-kelowna.html</loc>
+    <lastmod>2026-11-02</lastmod>
+    <priority>0.6</priority>
   </url>
   <url>
     <loc>https://go.kdtlandscape.ca/blog-retaining-wall-kelowna-slope.html</loc>
